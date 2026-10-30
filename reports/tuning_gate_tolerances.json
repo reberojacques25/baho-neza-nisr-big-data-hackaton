@@ -1,0 +1,30 @@
+{
+  "poverty": {
+    "recall_gap": 0.015092950914273814,
+    "worst_group_recall": 0.044879630330908166,
+    "mean_abs_calibration_gap": 0.0026192929991588065,
+    "slope_distance": 0.05
+  },
+  "vup_gap": {
+    "recall_gap": 0.03654675297929915,
+    "worst_group_recall": 0.08481384524067921,
+    "mean_abs_calibration_gap": 0.002986488319769373,
+    "slope_distance": 0.053155701783256674
+  },
+  "poverty_index_se": {
+    "recall_gap": 0.015092950914273814,
+    "worst_group_recall": 0.044879630330908166,
+    "mean_abs_calibration_gap": 0.0026192929991588065,
+    "max_abs_calibration_gap": 0.008057095094823503,
+    "auc_gap": 0.004122878582922114,
+    "calibration_slope": 0.01924732326712476
+  },
+  "vup_gap_index_se": {
+    "recall_gap": 0.03654675297929915,
+    "worst_group_recall": 0.08481384524067921,
+    "mean_abs_calibration_gap": 0.002986488319769373,
+    "max_abs_calibration_gap": 0.013254096917403839,
+    "auc_gap": 0.01612086300726044,
+    "calibration_slope": 0.053155701783256674
+  }
+}

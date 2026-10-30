@@ -1,0 +1,35 @@
+{
+  "chosen_approach": "baseline",
+  "rule": "PR-AUC within 1 SE of best; best mean rank on recall gap, worst-group recall, calibration gap; ties to simpler",
+  "summary": {
+    "pr_auc_mean": 0.7439,
+    "pr_auc_se": 0.0071,
+    "recall_gap": 0.1939,
+    "worst_group_recall": 0.1847,
+    "mean_abs_calibration_gap": 0.011,
+    "max_abs_calibration_gap": 0.041
+  },
+  "baseline_summary": {
+    "pr_auc_mean": 0.7439,
+    "pr_auc_se": 0.0071,
+    "recall_gap": 0.1939,
+    "worst_group_recall": 0.1847,
+    "mean_abs_calibration_gap": 0.011,
+    "max_abs_calibration_gap": 0.041
+  },
+  "policy_option": "separate urban/rural cut-offs (area_quota_inclusion); a policy decision, not part of the model",
+  "policy_option_effect": {
+    "national cut-off": {
+      "recall_people_top20": 0.6651,
+      "precision_top20": 0.7118,
+      "recall_gap": 0.1939,
+      "worst_group_recall": 0.1847
+    },
+    "separate urban/rural cut-offs (policy)": {
+      "recall_people_top20": 0.663,
+      "precision_top20": 0.7093,
+      "recall_gap": 0.1853,
+      "worst_group_recall": 0.1999
+    }
+  }
+}

@@ -1,0 +1,10 @@
+dataset,amount_variable,eligible_if,eligible_rows,pct_missing_all_rows,pct_missing_among_eligible,pct_zero_among_eligible
+vup_direct_support,s9d1q4,s9d1q2 == 1,439,97.1,0.0,0.0
+vup_classic_pw,s9d2q11,s9d2q1 == 1,389,98.0,22.6,0.0
+vup_expanded_pw,s9d3q10,s9d3q1 == 1,335,98.4,28.4,0.0
+vup_nsds,s9d4q8,s9d4q1 == 1,561,96.3,0.0,0.5
+vup_nsds,s9d4q8a,s9d4q1 == 1,561,100.0,99.6,0.0
+vup_financial_services,s9d5q4,s9d5q2 == 1,325,97.9,3.1,0.0
+nonfood_annual,s8a1q3,s8a1q2 == 1,214867,81.5,0.0,0.0
+nonfood_monthly,s8a2q3,s8a2q2 == 1,99345,89.8,0.0,0.0
+nonfood_weekly,s8a3q3,s8a3q2 == 1,53291,84.6,0.0,0.0

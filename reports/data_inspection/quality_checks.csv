@@ -1,0 +1,267 @@
+check,dataset,status,n_affected,detail
+Key is unique,poverty,pass,0,key hhid; 0 rows are exact copies of another row
+Key is unique,household,pass,0,key hhid; 0 rows are exact copies of another row
+Key is unique,person,pass,0,key hhid + pid; 0 rows are exact copies of another row
+Key is unique,credit,pass,0,key hhid + s10aq4; 0 rows are exact copies of another row
+Key is unique,durables,pass,0,key hhid + s10bq0; 0 rows are exact copies of another row
+Key is unique,savings,pass,0,key hhid + s10cq3; 0 rows are exact copies of another row
+Key is unique,services,pass,0,key hhid + s5fq0; 0 rows are exact copies of another row
+Key is unique,nonfood_annual,pass,0,key hhid + s8a1q0; 0 rows are exact copies of another row
+Key is unique,nonfood_monthly,pass,0,key hhid + s8a2q0; 0 rows are exact copies of another row
+Key is unique,nonfood_weekly,pass,0,key hhid + s8a3q0; 0 rows are exact copies of another row
+Key is unique,food,pass,0,key hhid + s8bq0; 0 rows are exact copies of another row
+Key is unique,food_away,pass,0,key hhid + pid; 0 rows are exact copies of another row
+Key is unique,transfers_out,warn,2519,"key hhid + s9aq2a + s9aq2; 1,292 rows are exact copies of another row"
+Key is unique,transfers_in,warn,3111,"key hhid + s9bq1a + s9bq2 + s9bq3; 2,670 rows are exact copies of another row"
+Key is unique,other_expenditure,warn,5772,"key hhid + s9cq1; 2,859 rows are exact copies of another row"
+Key is unique,vup_direct_support,pass,0,key hhid + pid; 0 rows are exact copies of another row
+Key is unique,vup_classic_pw,pass,0,key hhid; 0 rows are exact copies of another row
+Key is unique,vup_expanded_pw,pass,0,key hhid + pid; 0 rows are exact copies of another row
+Key is unique,vup_nsds,pass,0,key hhid + pid; 0 rows are exact copies of another row
+Key is unique,vup_financial_services,pass,0,key hhid; 0 rows are exact copies of another row
+Key is unique,other_income,warn,11544,"key hhid + s9eq1; 5,749 rows are exact copies of another row"
+Key is unique,finscope,pass,0,key key; 0 rows are exact copies of another row
+Covers all poverty-file households,poverty,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,household,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,person,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,credit,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,durables,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,savings,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,services,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,nonfood_annual,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,nonfood_monthly,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,nonfood_weekly,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,food,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,food_away,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,transfers_out,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,transfers_in,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,other_expenditure,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,vup_direct_support,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,vup_classic_pw,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,vup_expanded_pw,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,vup_nsds,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,vup_financial_services,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Covers all poverty-file households,other_income,pass,0,"0 poverty-file households absent, 0 households not in poverty file"
+Household weight positive and complete,poverty,pass,0,"range 48.8-626.7; sums to 3,289,819 households"
+pop_wt = weight x member,poverty,pass,0,"pop_wt sums to 13,549,457 people"
+Weight constant within cluster,poverty,pass,0,"1,674 clusters, about 9 households each"
+Clusters nested in districts,poverty,pass,0,
+Stratum identifier location,all EICV7,info,0,strata_id is in the module files but not in the poverty or household files; take it from any module
+hhid storage type,all EICV7,info,0,"stored as float32; values [ID withheld]-[ID withheld] are exact, but cast to int64 before joining"
+weight matches poverty file,household,pass,0,0 households differ where filled
+clust matches poverty file,household,pass,0,0 households differ where filled
+province matches poverty file,household,pass,0,0 households differ where filled
+district matches poverty file,household,pass,0,0 households differ where filled
+ur matches poverty file,household,pass,0,0 households differ where filled
+quintile matches poverty file,household,warn,150,150 households differ where filled
+poverty matches poverty file,household,warn,10,10 households differ where filled
+pov_jan matches poverty file,household,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,household,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,person,pass,0,0 households differ where filled
+clust matches poverty file,person,pass,0,0 households differ where filled
+province matches poverty file,person,pass,0,0 households differ where filled
+district matches poverty file,person,pass,0,0 households differ where filled
+ur matches poverty file,person,pass,0,0 households differ where filled
+quintile matches poverty file,person,warn,7,7 households differ where filled
+poverty matches poverty file,person,warn,10,10 households differ where filled
+pov_jan matches poverty file,person,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,person,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,credit,pass,0,0 households differ where filled
+clust matches poverty file,credit,pass,0,0 households differ where filled
+province matches poverty file,credit,pass,0,0 households differ where filled
+district matches poverty file,credit,pass,0,0 households differ where filled
+ur matches poverty file,credit,pass,0,0 households differ where filled
+quintile matches poverty file,credit,warn,1,1 households differ where filled
+poverty matches poverty file,credit,warn,3,3 households differ where filled
+pov_jan matches poverty file,credit,warn,3,3 households differ where filled
+epov_jan matches poverty file,credit,pass,0,0 households differ where filled
+weight matches poverty file,durables,pass,0,0 households differ where filled
+clust matches poverty file,durables,pass,0,0 households differ where filled
+province matches poverty file,durables,pass,0,0 households differ where filled
+district matches poverty file,durables,pass,0,0 households differ where filled
+ur matches poverty file,durables,pass,0,0 households differ where filled
+quintile matches poverty file,durables,warn,7,7 households differ where filled
+poverty matches poverty file,durables,warn,10,10 households differ where filled
+pov_jan matches poverty file,durables,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,durables,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,savings,pass,0,0 households differ where filled
+clust matches poverty file,savings,pass,0,0 households differ where filled
+province matches poverty file,savings,pass,0,0 households differ where filled
+district matches poverty file,savings,pass,0,0 households differ where filled
+ur matches poverty file,savings,pass,0,0 households differ where filled
+quintile matches poverty file,savings,warn,1,1 households differ where filled
+poverty matches poverty file,savings,warn,3,3 households differ where filled
+pov_jan matches poverty file,savings,warn,3,3 households differ where filled
+epov_jan matches poverty file,savings,pass,0,0 households differ where filled
+weight matches poverty file,services,pass,0,0 households differ where filled
+clust matches poverty file,services,pass,0,0 households differ where filled
+province matches poverty file,services,pass,0,0 households differ where filled
+district matches poverty file,services,pass,0,0 households differ where filled
+ur matches poverty file,services,pass,0,0 households differ where filled
+quintile matches poverty file,services,warn,1,1 households differ where filled
+poverty matches poverty file,services,warn,3,3 households differ where filled
+pov_jan matches poverty file,services,warn,3,3 households differ where filled
+epov_jan matches poverty file,services,pass,0,0 households differ where filled
+weight matches poverty file,nonfood_annual,pass,0,0 households differ where filled
+clust matches poverty file,nonfood_annual,pass,0,0 households differ where filled
+province matches poverty file,nonfood_annual,pass,0,0 households differ where filled
+district matches poverty file,nonfood_annual,pass,0,0 households differ where filled
+ur matches poverty file,nonfood_annual,pass,0,0 households differ where filled
+quintile matches poverty file,nonfood_annual,warn,7,7 households differ where filled
+poverty matches poverty file,nonfood_annual,warn,10,10 households differ where filled
+pov_jan matches poverty file,nonfood_annual,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,nonfood_annual,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,nonfood_monthly,pass,0,0 households differ where filled
+clust matches poverty file,nonfood_monthly,pass,0,0 households differ where filled
+province matches poverty file,nonfood_monthly,pass,0,0 households differ where filled
+district matches poverty file,nonfood_monthly,pass,0,0 households differ where filled
+ur matches poverty file,nonfood_monthly,pass,0,0 households differ where filled
+quintile matches poverty file,nonfood_monthly,warn,7,7 households differ where filled
+poverty matches poverty file,nonfood_monthly,warn,10,10 households differ where filled
+pov_jan matches poverty file,nonfood_monthly,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,nonfood_monthly,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,nonfood_weekly,pass,0,0 households differ where filled
+clust matches poverty file,nonfood_weekly,pass,0,0 households differ where filled
+province matches poverty file,nonfood_weekly,pass,0,0 households differ where filled
+district matches poverty file,nonfood_weekly,pass,0,0 households differ where filled
+ur matches poverty file,nonfood_weekly,pass,0,0 households differ where filled
+quintile matches poverty file,nonfood_weekly,warn,7,7 households differ where filled
+poverty matches poverty file,nonfood_weekly,warn,10,10 households differ where filled
+pov_jan matches poverty file,nonfood_weekly,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,nonfood_weekly,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,food,pass,0,0 households differ where filled
+clust matches poverty file,food,pass,0,0 households differ where filled
+province matches poverty file,food,pass,0,0 households differ where filled
+district matches poverty file,food,pass,0,0 households differ where filled
+ur matches poverty file,food,pass,0,0 households differ where filled
+quintile matches poverty file,food,warn,7,7 households differ where filled
+poverty matches poverty file,food,warn,10,10 households differ where filled
+pov_jan matches poverty file,food,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,food,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,food_away,pass,0,0 households differ where filled
+clust matches poverty file,food_away,pass,0,0 households differ where filled
+province matches poverty file,food_away,pass,0,0 households differ where filled
+district matches poverty file,food_away,pass,0,0 households differ where filled
+ur matches poverty file,food_away,pass,0,0 households differ where filled
+quintile matches poverty file,food_away,warn,7,7 households differ where filled
+poverty matches poverty file,food_away,warn,10,10 households differ where filled
+pov_jan matches poverty file,food_away,warn,9,coded 0/1 here but 0/100 in the poverty file; 9 households differ where filled
+epov_jan matches poverty file,food_away,warn,1,coded 0/1 here but 0/100 in the poverty file; 1 households differ where filled
+weight matches poverty file,transfers_out,pass,0,0 households differ where filled
+clust matches poverty file,transfers_out,pass,0,0 households differ where filled
+province matches poverty file,transfers_out,pass,0,0 households differ where filled
+district matches poverty file,transfers_out,pass,0,0 households differ where filled
+ur matches poverty file,transfers_out,pass,0,0 households differ where filled
+quintile matches poverty file,transfers_out,warn,1,1 households differ where filled
+poverty matches poverty file,transfers_out,warn,3,3 households differ where filled
+pov_jan matches poverty file,transfers_out,warn,3,3 households differ where filled
+epov_jan matches poverty file,transfers_out,pass,0,0 households differ where filled
+weight matches poverty file,transfers_in,pass,0,0 households differ where filled
+clust matches poverty file,transfers_in,pass,0,0 households differ where filled
+province matches poverty file,transfers_in,pass,0,0 households differ where filled
+district matches poverty file,transfers_in,pass,0,0 households differ where filled
+ur matches poverty file,transfers_in,pass,0,0 households differ where filled
+quintile matches poverty file,transfers_in,pass,0,0 households differ where filled
+poverty matches poverty file,transfers_in,pass,0,0 households differ where filled
+pov_jan matches poverty file,transfers_in,warn,0,coded 0/1 here but 0/100 in the poverty file; 0 households differ where filled
+epov_jan matches poverty file,transfers_in,warn,0,coded 0/1 here but 0/100 in the poverty file; 0 households differ where filled
+weight matches poverty file,other_expenditure,pass,0,0 households differ where filled
+clust matches poverty file,other_expenditure,pass,0,0 households differ where filled
+province matches poverty file,other_expenditure,pass,0,0 households differ where filled
+district matches poverty file,other_expenditure,pass,0,0 households differ where filled
+ur matches poverty file,other_expenditure,pass,0,0 households differ where filled
+quintile matches poverty file,other_expenditure,warn,1,1 households differ where filled
+poverty matches poverty file,other_expenditure,warn,3,3 households differ where filled
+pov_jan matches poverty file,other_expenditure,warn,3,3 households differ where filled
+epov_jan matches poverty file,other_expenditure,pass,0,0 households differ where filled
+weight matches poverty file,vup_direct_support,pass,0,"filled for only 437 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+clust matches poverty file,vup_direct_support,pass,0,0 households differ where filled
+province matches poverty file,vup_direct_support,pass,0,0 households differ where filled
+district matches poverty file,vup_direct_support,pass,0,0 households differ where filled
+ur matches poverty file,vup_direct_support,pass,0,0 households differ where filled
+quintile matches poverty file,vup_direct_support,pass,0,"filled for only 437 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+poverty matches poverty file,vup_direct_support,pass,0,"filled for only 437 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+pov_jan matches poverty file,vup_direct_support,pass,0,"filled for only 437 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+epov_jan matches poverty file,vup_direct_support,pass,0,"filled for only 437 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+weight matches poverty file,vup_classic_pw,pass,0,"filled for only 389 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+clust matches poverty file,vup_classic_pw,pass,0,0 households differ where filled
+province matches poverty file,vup_classic_pw,pass,0,0 households differ where filled
+district matches poverty file,vup_classic_pw,pass,0,0 households differ where filled
+ur matches poverty file,vup_classic_pw,pass,0,0 households differ where filled
+quintile matches poverty file,vup_classic_pw,pass,0,"filled for only 389 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+poverty matches poverty file,vup_classic_pw,pass,0,"filled for only 389 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+pov_jan matches poverty file,vup_classic_pw,pass,0,"filled for only 389 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+epov_jan matches poverty file,vup_classic_pw,pass,0,"filled for only 389 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+weight matches poverty file,vup_expanded_pw,pass,0,"filled for only 334 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+clust matches poverty file,vup_expanded_pw,pass,0,0 households differ where filled
+province matches poverty file,vup_expanded_pw,pass,0,0 households differ where filled
+district matches poverty file,vup_expanded_pw,pass,0,0 households differ where filled
+ur matches poverty file,vup_expanded_pw,pass,0,0 households differ where filled
+quintile matches poverty file,vup_expanded_pw,pass,0,"filled for only 334 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+poverty matches poverty file,vup_expanded_pw,pass,0,"filled for only 334 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+pov_jan matches poverty file,vup_expanded_pw,pass,0,"filled for only 334 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+epov_jan matches poverty file,vup_expanded_pw,pass,0,"filled for only 334 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+weight matches poverty file,vup_nsds,pass,0,"filled for only 558 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+clust matches poverty file,vup_nsds,pass,0,0 households differ where filled
+province matches poverty file,vup_nsds,pass,0,0 households differ where filled
+district matches poverty file,vup_nsds,pass,0,0 households differ where filled
+ur matches poverty file,vup_nsds,pass,0,0 households differ where filled
+quintile matches poverty file,vup_nsds,pass,0,"filled for only 558 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+poverty matches poverty file,vup_nsds,pass,0,"filled for only 558 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+pov_jan matches poverty file,vup_nsds,pass,0,"filled for only 558 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+epov_jan matches poverty file,vup_nsds,pass,0,"filled for only 558 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+weight matches poverty file,vup_financial_services,pass,0,"filled for only 333 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+clust matches poverty file,vup_financial_services,pass,0,0 households differ where filled
+province matches poverty file,vup_financial_services,pass,0,0 households differ where filled
+district matches poverty file,vup_financial_services,pass,0,0 households differ where filled
+ur matches poverty file,vup_financial_services,pass,0,0 households differ where filled
+quintile matches poverty file,vup_financial_services,pass,0,"filled for only 333 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+poverty matches poverty file,vup_financial_services,pass,0,"filled for only 333 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+pov_jan matches poverty file,vup_financial_services,pass,0,"filled for only 333 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+epov_jan matches poverty file,vup_financial_services,pass,0,"filled for only 333 of 15,054 households (VUP beneficiaries); 0 households differ where filled"
+weight matches poverty file,other_income,pass,0,0 households differ where filled
+clust matches poverty file,other_income,pass,0,0 households differ where filled
+province matches poverty file,other_income,pass,0,0 households differ where filled
+district matches poverty file,other_income,pass,0,0 households differ where filled
+ur matches poverty file,other_income,pass,0,0 households differ where filled
+quintile matches poverty file,other_income,warn,1,1 households differ where filled
+poverty matches poverty file,other_income,warn,3,3 households differ where filled
+pov_jan matches poverty file,other_income,warn,3,3 households differ where filled
+epov_jan matches poverty file,other_income,pass,0,0 households differ where filled
+cons1 = exp1 + ... + exp11,poverty,pass,0,max difference 6.4 RWF
+food = exp9 + exp10 + Food_at_school,poverty,pass,0,"Food_at_school is also inside exp1 (education), so do not add food and exp1 together"
+sol_jan = cons1ae / hh_index,poverty,pass,0,hh_index converts each household's consumption to national January 2024 prices
+pov_jan = 100 x (sol_jan < Poverty_line),poverty,pass,0,"poverty line 560,127 RWF per adult equivalent per year"
+member = number of person records,person,pass,0,
+Exactly one household head,person,pass,0,"head code 1; 0 households without a head, 0 with more than one"
+Ages within 0-110,person,warn,1,range 0-117; 0 missing
+Item list appears once per household,other_expenditure,warn,222,222 households have 2x the 13-item list; 27 household-items have conflicting amounts
+Item list appears once per household,other_income,warn,222,222 households have 2x the 26-item list; 6 household-items have conflicting amounts
+No exact duplicate rows,transfers_out,warn,1292,deduplicate before summing transfer amounts; up to 99 rows per household
+No exact duplicate rows,transfers_in,warn,2670,deduplicate before summing transfer amounts; up to 99 rows per household
+One row per household,vup_direct_support,info,2,2 households have one row per beneficiary member
+One row per household,vup_classic_pw,pass,0,0 households have one row per beneficiary member
+One row per household,vup_expanded_pw,info,1,1 households have one row per beneficiary member
+One row per household,vup_nsds,info,3,3 households have one row per beneficiary member
+One row per household,vup_financial_services,pass,0,0 households have one row per beneficiary member
+s9d1q1 ('beneficiary of any VUP component') is component-specific,vup_*,info,1891,"in every file s9d1q1 = 1 exactly for that file's component (identical: True); 1,891 households (11.6% weighted) are in at least one component, 151 in two or more; build vup_any from all five files"
+No completely empty variables,EICV7,warn,7,"services.s5fq0d, transfers_in.s9bq7, transfers_in.s9bq10, vup_nsds.s9d4q8b, vup_nsds.s9d4q8c, vup_nsds.s9d4q8d, vup_financial_services.s9d1q2"
+Variables with a single value,EICV7,info,12,"poverty.Poverty_line, poverty.Extreme_line, person.s1q14, transfers_out.s9aq13, vup_direct_support.s9d1q2, vup_direct_support.s9d1q7, vup_classic_pw.s9d2q1, vup_expanded_pw.s9d3q1, vup_nsds.s9d4q1, vup_nsds.s9d4q11, vup_nsds.s9d1q2, vup_financial_services.s9d5q1"
+All codes of categorical variables have labels,EICV7,warn,19,"household.epov_jan [1], household.pov_jan [1], person.epov_jan [1], person.pov_jan [1], durables.epov_jan [1], durables.pov_jan [1], nonfood_annual.epov_jan [1], nonfood_annual.pov_jan [1], nonfood_monthly.epov_jan [1], nonfood_monthly.pov_jan [1], nonfood_weekly.epov_jan [1], nonfood_weekly.pov_jan [1]"
+Numeric variables that label one special value only,EICV7,info,18,"household.s5cq27 [98=Don?t know], household.s5eq4a [99=HH not recoverd from the sh], household.s5eq4b [99=HH not recoverd from the sh], household.s5eq4c [99=HH not recoverd from the sh], person.s1q3y [998=Don't know], person.s2q3y [0=Less than one year], person.s2q6 [0=Less than one year], person.s4aq14a [0=Zero]"
+Don't know / refused codes present,EICV7,info,19,19 variables use a labelled don't know or refused code; treat as missing in analysis
+No negative values in unlabelled numeric variables,EICV7,pass,0,
+"Possible sentinel values (9999, -99, ...) in unlabelled variables",EICV7,info,6,"household.s5bq1, household.s5bq8, household.s5cq9b, household.s5cq20, person.s6bq9a, other_income.s9eq4"
+No completely empty variables,FinScope 2024,warn,122,"finscope.e2b, finscope.e14, finscope.e15, finscope.e15_6, finscope.e15_7, finscope.e15_13, finscope.e18, finscope.e20, finscope.qf1, finscope.qf2, finscope.qf3, finscope.qf5_01"
+Variables with a single value,FinScope 2024,info,391,"finscope.qf5_02_13, finscope.qf5_02_14, finscope.qf5_07_6, finscope.qf5_08_5, finscope.qf5_08_12, finscope.qf5_08_13, finscope.qf5_09_2, finscope.qf5_09_6, finscope.qf5_09_13, finscope.qf5_11_2, finscope.qf5_11_5, finscope.qf5_11_13"
+All codes of categorical variables have labels,FinScope 2024,warn,16,"finscope.i9a [0], finscope.k16b_01 [99], finscope.k16b_02 [99], finscope.k16b_03 [99], finscope.k16b_04 [99], finscope.k16b_05 [99], finscope.k16b_06 [99], finscope.k16b_07 [99], finscope.k16b_08 [99], finscope.k16b_09 [99], finscope.k16b_10 [99], finscope.k16b_11 [99]"
+Numeric variables that label one special value only,FinScope 2024,info,6,"finscope.h10c [99=Don't know/cannot remember], finscope.cc4_1 [999999=Missing value], finscope.cc4_4 [999999=Missing value], finscope.c1a [999=Missing], finscope.c6_2 [20=20 - 20], finscope.c6_3 [20=20 - 20]"
+Don't know / refused codes present,FinScope 2024,info,75,75 variables use a labelled don't know or refused code; treat as missing in analysis
+No negative values in unlabelled numeric variables,FinScope 2024,pass,0,
+"Possible sentinel values (9999, -99, ...) in unlabelled variables",FinScope 2024,info,1,finscope.key
+Labels are valid UTF-8,"household, person",warn,2,some value or variable labels needed latin-1 decoding; check accented or curly-quote characters in labels
+Key is unique,finscope,pass,0,
+Geography codes match EICV7,finscope,pass,0,"same province, district (11-57) and urban/rural codes as EICV7"
+Respondents per district x urban/rural cell,finscope,info,59,"59 cells, 96-607 respondents (median 256)"
+Weighted population totals,finscope,info,0,"hh_wt sums to 3,575,491 households (EICV7: 3,289,819); pop_wt sums to 8,155,637 adults aged 16+"
+No interview date in either survey,EICV7 and FinScope,info,0,No interview date or month variable in any file; EICV7 values are in January 2024 prices via hh_index

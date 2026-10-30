@@ -1,0 +1,668 @@
+# Baho Neza: English text. Every user-facing string in the app lives here (Kinyarwanda in rw.yaml, same keys).
+# Placeholders in {braces} are filled by the app; keep them identical in both files.
+
+app:
+  name: Baho Neza
+  tagline: Plan better support for your community.
+  persistent: Planning estimates. Official eligibility and verification still apply.
+
+nav:
+  overview: Overview
+  community: Our community
+  prices: What if prices rise?
+  compare: Compare support
+  how_it_works: How it works
+  data_limits: Data & limitations
+
+lang:
+  label: Language
+
+footer:
+  credits: "Baho Neza · Survey data: NISR EICV7 (2023/24). Prices: NISR Consumer Price Index. Boundaries: geoBoundaries (CC BY 4.0). Aggregated estimates only; no household records are shown."
+
+errors:
+  missing_tables: "The aggregated planning tables are missing. Build them with: python -m src.dashboard.build_planning"
+  suppressed: "Not shown for this selection: too few survey households to publish safely. Choose a wider area or the whole district."
+  geography: This place and area combination is not available.
+  increase_range: Price increases must be between 0% and 100%.
+  unknown_mode: Choose either one increase for all prices or separate increases.
+  horizon: Choose a period of 3, 6 or 12 months.
+  unknown_category: One of the spending categories is not supported.
+  action_unavailable: This type of support is not available in Baho Neza yet.
+  unknown_action: This type of support is not recognised.
+  duration: Choose a duration of 0, 3, 6 or 12 months.
+  delivery_range: Delivery costs must be between 0% and 100% of transfers.
+  planning_group: This planning group is not available.
+  frequency: Choose monthly or quarterly payments.
+  duration_frequency: The duration must be a whole number of payment periods.
+  amount_range: Amounts cannot be negative.
+  ds_level: Choose one of the expansion levels offered.
+
+context:
+  geography: Place
+  survey: Survey
+  cpi: Latest prices
+  scenario: Scenario
+  survey_period: "EICV7, {start} to {end}"
+
+scenario:
+  label_simple: "+{pct}% on all prices over the next {months} months, from {base}"
+  label_detailed: "Separate increases by category over the next {months} months, from {base}"
+
+state:
+  stale_price: Settings changed. Calculate again.
+  stale_compare: Settings changed. Compare again.
+
+source:
+  survey: Survey statistic
+  model: Model estimate
+  scenario: Scenario
+
+common:
+  hidden: Not shown (small sample)
+  ci: "95% interval: {ci}"
+  ci_header: 95% interval
+
+units:
+  rwf: "{v} RWF"
+  million_rwf: "{v} million RWF"
+  billion_rwf: "{v} billion RWF"
+  month_year: "{month} {year}"
+  months: "{n} months"
+
+months:
+  m1: January
+  m2: February
+  m3: March
+  m4: April
+  m5: May
+  m6: June
+  m7: July
+  m8: August
+  m9: September
+  m10: October
+  m11: November
+  m12: December
+
+geo:
+  label: Place
+  district: District
+  rwanda: All Rwanda
+  place_area: "{place} · {area}"
+
+area:
+  label: Area
+  all: All areas
+  urban: Urban
+  rural: Rural
+
+indicator:
+  poverty:
+    name: Estimated poverty likelihood
+    unit: Average likelihood (%)
+    help: "Model estimate: the average predicted chance that a household is below the poverty line, from survey answers. A planning signal, not anyone's poverty status."
+  price:
+    name: Household price pressure
+    unit: Basket cost change (%)
+    help: "How much more the same household basket costs at the latest prices than in January 2024, priced with the official urban or rural CPI."
+  need:
+    name: Need level
+    unit: High-need households (%)
+    help: "Share of households in the top fifth nationally on the distress score (prices, food share, poverty, income instability, savings and credit). VUP is left out of the score."
+  coverage:
+    name: VUP coverage of high-need households
+    unit: Covered (%)
+    help: "Share of high-need households that received any VUP component in the survey year (observed participation)."
+
+finding:
+  none: No indicator here differs clearly from the comparison level once survey uncertainty is taken into account.
+  poverty_rate:
+    higher: "The poverty rate is higher than across Rwanda: {value} ({ci}) compared with {ref}."
+    lower: "The poverty rate is lower than across Rwanda: {value} ({ci}) compared with {ref}."
+  high_need_share:
+    higher: "More households are high-need than across Rwanda: {value} ({ci}) compared with {ref}."
+    lower: "Fewer households are high-need than across Rwanda: {value} ({ci}) compared with {ref}."
+  high_need_vup_coverage:
+    higher: "VUP reached more high-need households than across Rwanda: {value} ({ci}) compared with {ref}."
+    lower: "VUP reached fewer high-need households than across Rwanda: {value} ({ci}) compared with {ref}."
+  basket_change_pct:
+    higher: "The household basket rose more in price than across Rwanda: {value} ({ci}) compared with {ref}."
+    lower: "The household basket rose less in price than across Rwanda: {value} ({ci}) compared with {ref}."
+
+finding_area:
+  poverty_rate:
+    rural_higher: "The poverty rate is higher in rural areas ({rural}) than in urban areas ({urban})."
+    rural_lower: "The poverty rate is lower in rural areas ({rural}) than in urban areas ({urban})."
+  high_need_share:
+    rural_higher: "More rural households are high-need ({rural}) than urban households ({urban})."
+    rural_lower: "Fewer rural households are high-need ({rural}) than urban households ({urban})."
+  high_need_vup_coverage:
+    rural_higher: "VUP reached more high-need households in rural areas ({rural}) than in urban areas ({urban})."
+    rural_lower: "VUP reached fewer high-need households in rural areas ({rural}) than in urban areas ({urban})."
+  basket_change_pct:
+    rural_higher: "Rural household baskets rose more in price ({rural}) than urban baskets ({urban})."
+    rural_lower: "Rural household baskets rose less in price ({rural}) than urban baskets ({urban})."
+
+compare_groups:
+  head_sex:
+    poverty_rate:
+      first_higher: "Poverty is higher in female-headed households ({a}) than in male-headed households ({b})."
+      first_lower: "Poverty is lower in female-headed households ({a}) than in male-headed households ({b})."
+    high_need_share:
+      first_higher: "Female-headed households are more often high-need ({a}) than male-headed households ({b})."
+      first_lower: "Female-headed households are less often high-need ({a}) than male-headed households ({b})."
+  disability:
+    poverty_rate:
+      first_higher: "Poverty is higher in households with a member with a disability ({a}) than in other households ({b})."
+      first_lower: "Poverty is lower in households with a member with a disability ({a}) than in other households ({b})."
+    high_need_share:
+      first_higher: "Households with a member with a disability are more often high-need ({a}) than other households ({b})."
+      first_lower: "Households with a member with a disability are less often high-need ({a}) than other households ({b})."
+  elderly:
+    poverty_rate:
+      first_higher: "Poverty is higher in households with a member aged 65 or over ({a}) than in other households ({b})."
+      first_lower: "Poverty is lower in households with a member aged 65 or over ({a}) than in other households ({b})."
+    high_need_share:
+      first_higher: "Households with a member aged 65 or over are more often high-need ({a}) than other households ({b})."
+      first_lower: "Households with a member aged 65 or over are less often high-need ({a}) than other households ({b})."
+
+group:
+  head_sex:
+    female: Female-headed households
+    male: Male-headed households
+  disability:
+    "yes": Member with a disability
+    "no": No member with a disability
+  elderly:
+    "yes": Member aged 65 or over
+    "no": No member aged 65 or over
+  poverty:
+    poor: Below the poverty line (2023/24)
+    nonpoor: Above the poverty line (2023/24)
+
+category:
+  food: Food
+  energy: Energy and fuel
+  transport: Transport
+  education: School costs
+  other: Other goods and services
+  food_help: Food and non-alcoholic drinks eaten at home.
+  energy_help: Electricity, gas, charcoal, firewood, kerosene and vehicle fuel.
+  transport_help: Fares, vehicles and repairs (vehicle fuel is under energy).
+  education_help: School fees and other school costs paid to schools.
+  other_help: Everything else in the basket, including rent, health, communication, clothing and meals away from home.
+
+overview:
+  title: Plan better support for your community.
+  question: See where needs are, test how rising prices could affect households, and compare what support could cost.
+  cta_explore: Explore my district
+  cta_prices: Test a price change
+  kpi:
+    basket:
+      label: Cost of the same household basket
+      sub: "Average household, {base} to {latest}"
+    poverty:
+      label: People below the poverty line
+      sub: Share of all people, EICV7 2023/24
+    gap:
+      label: High-need households without VUP support
+      sub: "{share} of the {total} high-need households, 2023/24"
+    basket_cost:
+      label: Average monthly basket per household
+      sub: "At {latest} prices; the starting point for price scenarios"
+  flow_title: Three steps
+  flow:
+    understand: Understand needs
+    test: Test a price change
+    compare: Compare responses
+  note: Figures describe households as surveyed in 2023/24. They are not a live register.
+
+community:
+  title: Our community
+  question: Where is support needed?
+  indicator: Show on map
+  price_note: "District differences in basket cost come from what households buy and from the urban or rural CPI. NISR does not publish district price indices."
+  gap_households: High-need households without VUP
+  rank: "Rank for {name}: between {best} and {worst} of {n} districts (1 = most pressure). Neighbouring ranks are often not clearly different."
+  rank_exact: "Rank for {name}: {rank} of {n} districts (1 = most pressure)."
+  panel_note: Intervals show survey uncertainty (95%).
+  table_view: Map as a table
+  findings_title: What stands out
+  findings_note: Only differences that hold once survey uncertainty is taken into account are listed (at most three).
+  groups_title: How groups compare
+  groups:
+    group: Group
+    households: Households
+  groups_note: Rows are hidden when either group in a pair has too few survey households.
+  gaps_title: Observed support gaps
+  gap_share: High-need households without VUP
+  gap_share_sub: "Share of {total} high-need households"
+  predicted_title: Predicted coverage patterns (model)
+  predicted:
+    measure: Measure
+    observed: Observed VUP coverage of high-need households
+    predicted: Predicted coverage for similar households (model)
+  predicted_body: "The VUP coverage model predicts coverage from the profiles of households that VUP reached in 2023/24. Lower predicted coverage means a profile is reached less often today. It does not prove that anyone was wrongly excluded, and it is not an eligibility decision."
+  gaps_note: "This shows possible support gaps. It does not mean someone was wrongly excluded."
+
+map:
+  legend_missing: Not shown (small sample)
+  legend_selected: Selected district
+
+brief:
+  title: District planning brief
+  hidden: Not shown (small sample)
+  ci: "95% interval {ci}"
+  price_window: "{base} to {latest}"
+  no_scenario: No current scenario (calculate one on the price or support pages).
+  includes_scenario: The brief includes your current scenario.
+  excludes_scenario: "The brief covers needs only. Calculate a price scenario to include it."
+  download_csv: Download brief (CSV)
+  download_pdf: Download brief (PDF)
+  filename: "baho-neza-brief-{place}-{area}-{date}.{ext}"
+  footer: "Baho Neza district planning brief. A planning aid, not an approved government document. Aggregated survey estimates only."
+  section:
+    about: About this brief
+    indicators: Key indicators
+    findings: What stands out
+    scenario: Price scenario
+    support: Support comparison
+    notes: Notes
+  item:
+    title: Document
+    geography: Place
+    generated: Generated on
+    survey: Survey period
+    prices: Price change measured
+    scenario: Scenario
+    programme: Programme
+    suppression: Small samples
+    sources: Sources
+    use: Responsible use
+  note:
+    survey: Households as surveyed; not a live register.
+    reference_monthly: "Same basket at {latest} prices, average per household"
+    per_household: Per household per month
+    duration: "Over {months} months"
+    suppression: "Values from fewer than {n} survey households are hidden, and other cells are hidden where subtraction could reveal them."
+    sources: "NISR EICV7 (2023/24); NISR Consumer Price Index (urban and rural); Baho Neza poverty and VUP coverage models."
+    not_official: Not an approved government document.
+  indicator:
+    poverty_rate: People below the poverty line
+    poverty_likelihood: Estimated poverty likelihood
+    high_need_share: High-need households
+    high_need_vup_coverage: VUP coverage of high-need households
+    basket_change_pct: Cost of the same basket since January 2024
+    protection_gap_households: High-need households without VUP
+    reference_monthly: Average monthly basket
+  column:
+    section: Section
+    item: Item
+    value: Value
+    note: Note
+
+prices:
+  title: What if prices rise?
+  question: How could changing prices affect our community?
+  baseline_title: Starting point
+  baseline: "Prices as measured in {latest}, the latest Consumer Price Index month. The change since {base} is already included in today's basket cost."
+  horizon: Over the next…
+  not_inflation: "Enter extra price increases on top of today's prices, added up over the whole period. These are not annual inflation rates."
+  mode: How prices change
+  mode_simple: All prices together
+  mode_detailed: By spending category
+  all_increase: All prices increase by…
+  increase:
+    food: Food prices increase by…
+    energy: Energy and fuel prices increase by…
+    transport: Transport prices increase by…
+    education: School costs increase by…
+    other: Other prices increase by…
+  assumption:
+    earnings: "Assumption: household incomes and other resources stay the same in money terms."
+    earnings_only: Changing earnings is not offered, because the survey does not measure income reliably enough.
+  calculate: Show results
+  prompt: Choose the period and the price increases, then select Show results.
+  result_title: Scenario results
+  result:
+    basket_change: Change in basket cost
+    basket_change_sub: Same basket, scenario prices compared with today
+    extra_monthly: Extra cost per household per month
+    extra_monthly_sub: "Today's basket: {ref} per month"
+    purchasing_power: Purchasing power
+    purchasing_power_sub: What the same money buys, if incomes stay the same
+    extra_total: Extra cost for all households per month
+    extra_total_sub: "{households} households in this place"
+  by_category: Where the extra cost comes from (per household per month)
+  table:
+    category: Category
+    reference: Today
+    increase: Increase
+    extra: Extra cost
+  exposed_title: Most exposed groups
+  exposed_note: Differences between groups come only from what they buy. Groups with too few survey households are not shown.
+  exposed_uniform: "With one increase for all prices, every basket rises by the same percentage; groups differ only in money terms. Use separate increases by category to see which groups are more exposed."
+  no_shortfall: "Poverty changes and income shortfalls are not shown: they would need a validated update of the poverty line and of how households adjust."
+  to_compare: Use this scenario to compare support
+  left_out_title: What this scenario leaves out
+  left_out: |
+    - Households switching to cheaper goods, which would lower the extra cost.
+    - Farm households that sell food and may gain from higher food prices.
+    - Wider effects on jobs, wages and businesses.
+  not_forecast: Scenario, not a forecast.
+
+compare:
+  title: Compare support
+  question: What response could help, and what would it cost?
+  carried: "This page uses the price scenario from **What if prices rise?** Edit it there, or set no new price change."
+  edit_price: Edit price scenario
+  reset_price: No new price change
+  action: Type of support
+  unavailable_title: Other types of support (not available yet)
+  rule: Planning group
+  level: Size of group
+  level_all: All households in the group
+  level_share: "Top {pct}% of households in this place"
+  amount: Amount per payment (RWF per household)
+  amount_help: Your planning assumption. It is not a programme rate.
+  frequency: Payment frequency
+  ds_level: Expansion size
+  ds_level_value: "+{pp} percentage points of all households in Rwanda"
+  ds_payment: Direct Support payment per quarter (RWF per household)
+  ds_payment_help: "Assumption kept separate from NSDS. The validated simulation used {sim} per quarter; the observed median Direct Support amount was {median} per year, and real payments vary with household size."
+  nsds_pct: NSDS payment increase
+  nsds_note: Applies to households already receiving NSDS, using their observed payments. It adds no new recipients.
+  duration: For how long
+  delivery: Delivery costs (% of transfers)
+  delivery_help: Optional. Leave at 0 if delivery costs are not known.
+  run: Compare
+  prompt: Choose a type of support, then select Compare.
+  result_title: Comparison
+  group_cash: "{rule} · {level}"
+  payment_cash: "{amount} per payment, {frequency}"
+  group_ds: "New Direct Support households from a national +{pp} point expansion, chosen by estimated poverty likelihood among households without VUP"
+  payment_ds: "{amount} per quarter (assumption)"
+  group_nsds: Households already receiving NSDS
+  payment_nsds: "+{pct}% of the observed quarterly payment, about {amount} more per quarter"
+  scope:
+    geography: Place
+    period: Period
+    programme: Programme
+    group: Recipients
+    payment: Payment
+    prices: Prices
+    assumptions: Assumptions
+  period: "{months} months from {latest} ({payments} payments)"
+  assumptions: "Recipients as surveyed in 2023/24; nobody's behaviour or income changes; no administrative costs unless entered."
+  national_rule_note: "This is this place's share of a national expansion: households are ranked across all of Rwanda, not within this district."
+  per_household: Per household per month
+  row:
+    basket: Basket cost
+    extra: Extra cost from the price change
+    support: Support received
+    not_offset: Extra cost not covered by support
+  col:
+    reference: Today
+    shock: Price change only
+    shock_support: Price change + support
+  cash_prices: Cash support does not lower market prices, so the basket cost is the same with or without it.
+  surplus: "On average, support exceeds the extra cost by {amount} per household per month."
+  average_note: These are averages for the group; some households may still face a shortfall when the average is covered.
+  reach:
+    households: New households reached
+    people: New people reached
+    people_sub: "{n} people"
+    existing: "No new recipients; {n} current households receive more"
+    poor: Recipients below the poverty line in 2023/24
+    poor_sub: "{share} of recipient households (survey)"
+  cost:
+    transfers: Additional direct transfers
+    transfers_sub: "{hh} households × {amount} × {payments} payments"
+    delivery: Delivery costs
+    total: Total additional cost
+    total_sub: "Including {delivery} delivery costs"
+    no_delivery: Delivery costs not specified
+  download: Download results (CSV)
+  filename: "baho-neza-support-{place}-{area}.csv"
+  not_estimated_title: What is not estimated
+  not_estimated: |
+    - Changes in poverty: transfers are not added to consumption to re-measure poverty, because the poverty line, the price basis and how households would spend the money have not been validated.
+    - Effects caused by the programme: the model scores rank households; editing them would not show what a policy causes.
+    - Combined packages: overlaps between programmes are not calculated, so packages are not offered.
+  disclaimer: "Planning estimate. Not a guarantee. Not for selecting or excluding individual households."
+
+action:
+  cash:
+    name: New cash transfer
+    help: A cash payment to a planning group you choose, at an amount you set.
+  ds_expansion:
+    name: Expand VUP Direct Support
+    help: Uses the validated coverage-expansion scenario. New households come from those without any VUP support.
+  nsds_increase:
+    name: Increase NSDS payments
+    help: Raises payments for current NSDS households. A benefit increase alone adds no recipients.
+  public_works:
+    name: Paid public works
+    why: Gross wages could be counted, but the extra earnings net of work people would have done otherwise are not known.
+  school_costs:
+    name: School-cost support
+    why: Programme rules (which costs, which learners) are not defined, and learners are not households.
+  food_assistance:
+    name: Food assistance
+    why: No programme rules or valuation of in-kind food are available.
+  livelihoods:
+    name: Training, farming or business support
+    why: There is no evidence in the data on the returns to these programmes.
+  combined:
+    name: Combined packages
+    why: Overlaps between programmes are not calculated, so recipients could be counted twice.
+
+rule:
+  poverty_top:
+    name: Higher estimated poverty likelihood
+  distress_top:
+    name: Higher distress
+  high_need_no_vup:
+    name: High need without observed VUP support
+
+frequency:
+  monthly: Monthly
+  quarterly: Quarterly
+
+how:
+  title: How it works
+  question: Four building blocks, each with a clear job and clear limits.
+  poverty:
+    title: Poverty model
+    body: Estimates how likely a household is to be below the poverty line, from survey answers. Used to compare places and to rank planning groups.
+    not: "The poverty model is not an eligibility decision and does not show what a policy would cause."
+  price:
+    title: Household price-shock engine
+    body: Prices each household's own basket with the official urban or rural CPI, by spending category, then adds the increases you enter.
+    not: "The price engine does not forecast prices and ignores households switching to cheaper goods."
+  distress:
+    title: Distress score
+    body: Combines overlapping needs (price shock, food share, poverty, income instability, savings and credit) into one ranking. High need is the top fifth.
+    not: "The distress score is a ranking device; scenarios never ask you to raise it, and it is not re-scored under a scenario."
+  coverage:
+    title: VUP coverage model
+    body: Describes which high-need profiles VUP reached in 2023/24, kept separate from observed participation.
+    not: "Low predicted coverage is not proof that anyone was wrongly excluded."
+  tech_title: Technical details
+  tech:
+    holdout_title: Model accuracy on the holdout (scored once)
+    holdout_note: "Final holdout: {n} households, one survey cluster in five, never used for training or tuning. Intervals: cluster bootstrap."
+    measure: Measure
+    value: Value
+    metric:
+      poverty_roc_auc: "Poverty model: ROC-AUC"
+      poverty_pr_auc: "Poverty model: PR-AUC"
+      poverty_precision_top20: "Poverty model: share of selected households that are poor (top 20%)"
+      poverty_poor_people_reached_top20: "Poverty model: share of poor people reached (top 20%)"
+      poverty_calibration_slope: "Poverty model: calibration slope"
+      vup_roc_auc: "VUP coverage model: ROC-AUC"
+      vup_pr_auc: "VUP coverage model: PR-AUC"
+    crossfit_title: Simulation statistics (cross-fitted, full sample)
+    crossfit_note: "These come from out-of-fold scores on all 15,054 households, as used in the scenarios. They are reported separately from the holdout results and are not a second test."
+    units_title: Households and people
+    units: "Precision counts households (how many of those selected are poor). Poor people reached counts people (how many poor people live in the selected households). The two are not interchangeable."
+    calibration_title: Calibration
+    calibration: "The poverty model is recalibrated by group so that average predictions match observed poverty by province, area, disability and other groups. This corrects averages only; errors within groups remain."
+    fairness_title: Fairness limitations
+    fairness: |
+      - With one national cut-off, small households, Kigali and young heads of household are reached far less often (19–54% of their poor people, against 66% overall).
+      - Recalibration does not change this; a different selection policy would.
+      - The VUP coverage model's results by group are imprecise (few recipients in the sample).
+    sources_title: Data sources
+    sources: |
+      - NISR EICV7 household survey, 2023/24: 15,054 households.
+      - NISR Consumer Price Index, urban and rural, January 2024 to {latest}.
+      - District boundaries: geoBoundaries (CC BY 4.0).
+    survey_age_title: Age of the survey
+    survey_age: "Households were interviewed between October 2023 and October 2024. Prices are updated to {latest}, but households, incomes and programme membership are not."
+    cpi_title: How prices are mapped
+    cpi: "Each of 25 spending cells is priced with one official NISR index for the household's area (urban or rural). Where rural indices do not exist, the closest rural index is used. Districts have no separate price indices."
+    scenarios_title: Scenario assumptions
+    scenarios: |
+      - Scenario increases are applied on top of {latest} prices; the observed change since January 2024 is counted once.
+      - Incomes stay the same in money terms.
+      - Households do not switch to cheaper goods.
+      - Recipients are households as surveyed; nobody joins or leaves.
+    ai_title: Use of AI
+    ai: "Parts of the code and text were drafted with an AI assistant and reviewed by the team. The Kinyarwanda text was machine-drafted and still needs review by a native speaker."
+  disclaimer: Planning estimates. Not for automatic beneficiary selection.
+
+data:
+  title: Data & limitations
+  question: What the numbers are, and what they are not.
+  kinds_title: Three kinds of numbers
+  kind:
+    survey: Measured from the EICV7 survey or official prices, with survey uncertainty.
+    model: Predicted by a statistical model from survey answers. Useful for comparing, not for deciding about a household.
+    scenario: Calculated from your assumptions. Shows what could happen if the assumptions held.
+  not_register: "The survey describes households as they were in 2023/24. It is not a live register, and figures updated for prices are not today's observed poverty."
+  privacy_title: How small groups are protected
+  privacy: |
+    - Only aggregated figures are published; the app never loads household records.
+    - Values from fewer than {n} survey households are hidden.
+    - A second cell is hidden wherever totals minus other published cells could reveal a hidden one (urban + rural, districts within Rwanda, pairs of groups).
+    - Nested planning groups (top 10%, 20%, 30%) are hidden when the difference between them would isolate fewer than {n} survey households.
+    - These rules have not been reviewed or approved by NISR.
+  supported_title: Supported scenarios
+  unsupported_title: Not supported
+  no_poverty_change: "Poverty after support: not estimated (no validated poverty-line update or consumption response)."
+  translation_title: Translation status
+  translation: "The Kinyarwanda text was machine-drafted and has not yet been reviewed by a native speaker. Please report unclear wording."
+  samples_title: Survey households by district
+  hidden_cell: Hidden
+  samples_note: "Number of survey households behind each figure. 'Hidden' means fewer than {n}, or hidden to protect another cell."
+  disclaimer: Planning estimates. Official eligibility and verification still apply.
+
+explain:
+  title: In plain words
+  button: Explain simply
+  loading: Writing a simple explanation…
+  ai_label: AI-assisted explanation
+  ai_note: "Worded with AI help from the verified results above. Baho Neza inserts every number itself; the result cards stay the authoritative figures. Check the wording before sharing."
+  not_configured: AI explanations are not configured.
+  needs_results: Show valid results first to get an explanation.
+  fallback: The plain-words summary above remains correct.
+  error:
+    timeout: The AI explanation took too long.
+    quota: The AI service is busy or its free limit has been reached. Try again later.
+    provider: The AI service is not available right now.
+    invalid: The AI explanation did not pass Baho Neza's checks, so it is not shown.
+    cooldown: Please wait a few seconds before asking for another explanation.
+    limit: You have reached the number of AI explanations allowed in this session.
+    inflight: An explanation is already being written.
+  section:
+    tested: What you tested
+    meaning: What it means
+    example: A simple example
+    support: What the support changes
+    limitation: One important limitation
+  price:
+    tested_simple: "You tested all prices rising by {increase_all_pct} over the next {horizon_months}, on top of {baseline_month} prices, in {place}. This is an extra rise in prices, not a change in the yearly inflation rate."
+    tested_detailed: "You tested separate price rises over the next {horizon_months}, on top of {baseline_month} prices, in {place}: food {increase_food_pct}, energy and fuel {increase_energy_pct}, transport {increase_transport_pct}, school costs {increase_education_pct} and other goods {increase_other_pct}. These are extra rises in prices, not changes in the yearly inflation rate."
+    meaning: "The same basket would cost {basket_change_pct} more: about {extra_monthly_rwf} more per household per month, on average (today's basket: {reference_monthly_rwf}). If incomes stay the same, the same money buys about {purchasing_power_loss_pct} less. For all {households} households here, the extra cost is about {extra_monthly_total_rwf} per month."
+    example_simple: "Illustration, not a district statistic: a household that spends {example_budget_rwf} a month on these goods would need about {example_extra_rwf} more each month."
+    example_detailed: "Illustration, not a real household: a household with this place's average spending mix that spends {example_budget_rwf} a month would need about {example_extra_rwf} more each month. Households that spend more on the categories that rise most would pay more."
+  support:
+    tested: "Programme tested: {programme}, in {place}. Recipients: {recipient_group}. Payment: {payment}. Period: {duration_months} ({payments} payments). Prices: {price_scenario}."
+    meaning_new: "{new_recipient_households} additional households ({new_recipient_people} people) would receive support; {poor_recipient_households} of these households were below the poverty line in the 2023/24 survey (observed, not predicted). Transfers would cost {direct_transfers_rwf}; with delivery costs of {delivery_costs_rwf}, the total is {total_cost_rwf}."
+    meaning_existing: "No additional households are added: {existing_recipient_households} households already receiving NSDS would receive more; {poor_recipient_households} of them were below the poverty line in the 2023/24 survey (observed). Transfers would cost {direct_transfers_rwf}; with delivery costs of {delivery_costs_rwf}, the total is {total_cost_rwf}."
+    changes: "On average, each recipient household faces {extra_monthly_rwf} of extra cost per month from the price change and receives {support_monthly_rwf} of support per month, leaving {not_offset_monthly_rwf} per month not covered. Support does not lower market prices."
+    example: "Illustration: over {duration_months}, one recipient household would receive {example_per_household_rwf} in total ({payments} payments)."
+  limit:
+    not_forecast: "This is a scenario, not a forecast: it shows what the same basket would cost if prices rose as entered."
+    no_substitution: It assumes households keep buying the same goods; switching to cheaper goods would lower the extra cost.
+    incomes_fixed: It assumes incomes stay the same in money terms.
+    survey_age: Households are as surveyed in 2023/24; the survey is not a live register.
+    no_poverty_change: It does not estimate how many people would leave poverty; it counts who would be reached and what it would cost.
+    averages: Figures are group averages; some households would still face a shortfall.
+    not_eligibility: Planning groups use estimated poverty likelihood or distress; they are not an eligibility decision.
+    national_rule: "This is this place's share of a national expansion: households are ranked across all of Rwanda."
+
+# Compact result layout: chips, KPI labels, charts and one-sentence summaries
+ux:
+  prices:
+    controls_note: "Extra increases on top of {latest} prices, added up over the period. They are not annual inflation rates."
+    earnings_note: "Incomes are assumed unchanged."
+    chip_period: Period
+    chip_period_value: "next {months} months from {latest}"
+    chip_prices: Prices
+    chip_simple: "+{pct}% on all prices"
+    chip_detailed: "by category (see chart)"
+    chip_incomes: Incomes
+    chip_incomes_value: unchanged (assumption)
+    sentence: "The same basket would cost {change} more: about {extra} extra per household per month."
+    chart_before_after: Basket cost per household per month
+    chart_today: "Today ({latest} prices)"
+    chart_scenario: With this price change
+    axis_monthly: RWF per household per month (average)
+    chart_contrib: Which categories add most to the increase
+    axis_extra: Extra RWF per household per month (average)
+    details_title: "Details: categories and groups"
+    assumptions_title: Assumptions and what is left out
+    assumptions: |
+      - Starting point: prices in {latest}, the latest CPI month. The change since {base} is already in today's basket cost.
+      - Incomes and other resources stay the same in money terms. Changing earnings is not offered: the survey does not measure income reliably enough.
+      - Poverty changes and income shortfalls are not shown: they would need a validated poverty-line update and household responses.
+      - Households switching to cheaper goods, gains for farm households that sell food, and wider effects on jobs and businesses are left out.
+  compare:
+    chip_programme: Programme
+    chip_payment: Payment
+    chip_duration: Duration
+    chip_duration_value: "{months} months ({payments} payments)"
+    chip_prices: Prices
+    kpi_new: Additional households supported
+    kpi_new_sub: "{poor} of them below the poverty line in 2023/24 (survey)"
+    kpi_existing: Existing recipients receiving more
+    kpi_existing_sub: "No new recipients · {poor} below the poverty line in 2023/24 (survey)"
+    kpi_people: People in these households
+    kpi_people_sub_new: People living in the additional households
+    kpi_people_sub_existing: People living in current NSDS households
+    kpi_cost: "Total additional cost"
+    kpi_cost_sub: "Over {months} months: transfers {transfers} + delivery {delivery}"
+    kpi_cost_sub_none: "Over {months} months: transfers only (delivery costs not specified)"
+    kpi_remaining: Extra cost still not covered
+    kpi_remaining_sub: Average per recipient household per month
+    kpi_remaining_surplus_sub: "Support exceeds the extra price cost by {surplus} a month, on average"
+    sentence_new: "{households} additional households would receive {support} a month on average; {remaining} of the extra price cost per household stays uncovered."
+    sentence_existing: "{households} current NSDS households would receive {support} more a month on average; {remaining} of the extra price cost per household stays uncovered."
+    sentence_new_surplus: "{households} additional households would receive {support} a month on average, which exceeds the extra price cost by {surplus}."
+    sentence_existing_surplus: "{households} current NSDS households would receive {support} more a month on average, which exceeds the extra price cost by {surplus}."
+    chart_offset: Extra living cost and support (per recipient household per month)
+    bar_extra: Extra cost from the price change
+    bar_support: Support received
+    bar_remaining: Still not covered
+    bar_surplus: Support above the extra cost
+    axis_offset: RWF per recipient household per month (average)
+    table_title: "Today · price change only · price change + support"
+    notes: "Averages for the recipient group; some households may still face a shortfall. Cash support does not lower market prices. A surplus is not a measure of poverty reduction."
+    assumptions_title: Assumptions and what is not estimated
+  community:
+    groups_chart: People below the poverty line, by group
+    groups_axis: "% of people (2023/24 survey)"
+    groups_table: Group table (all indicators)
+    indicator_about: About this indicator

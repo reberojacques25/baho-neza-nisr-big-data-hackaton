@@ -1,0 +1,53 @@
+block,column,source_dataset,source_variables,rule,notes
+Keys and design,hhid,poverty,hhid,cast float32 to int64,Primary key; every module joins on it.
+Keys and design,clust,poverty,clust,as is,Primary sampling unit for standard errors.
+Keys and design,strata_id,any S8-S10 module,strata_id,first value per hhid,Not in the poverty or household files.
+Keys and design,"province, district, ur",poverty,"province, district, ur",as is,"Same codes as FinScope a1, a2, a6."
+Keys and design,weight,poverty,weight,as is,Household weight; sums to about 3.29 million households.
+Keys and design,pop_wt,poverty,pop_wt,as is,= weight x member; use for person-level rates such as poverty.
+Welfare,"member, ae",poverty,"member, ae",as is,Household size and adult equivalents.
+Welfare,"cons_nominal, cons_nominal_ae",poverty,"cons1, cons1ae",rename,Annual consumption in survey-period prices (RWF).
+Welfare,hh_price_index,poverty,hh_index,rename,Household price deflator to national January 2024 prices.
+Welfare,cons_real_ae_jan2024,poverty,sol_jan,rename,= cons1ae / hh_index. NISR's welfare measure.
+Welfare,cons_real_jan2024,poverty,"cons1, hh_index",cons1 / hh_index,
+Welfare,exp_education ... exp_durables_use,poverty,"exp1-exp11, Food_at_school",rename,Components of cons1; nominal.
+Welfare,food_share,poverty,"food, cons1",food / cons1,food = exp9 + exp10 + Food_at_school.
+Welfare,"poor, extreme_poor",poverty,"pov_jan, epov_jan",divide by 100 -> 0/1,"Module files code these 0/1, the poverty file 0/100."
+Welfare,"poverty_status, quintile",poverty,"poverty, quintile",as is,Value labels in the data dictionary.
+CPI linkage,cpi_area,derived,ur,"1 -> urban, 2 -> rural",Selects the CPI series.
+CPI linkage,budget_share_<cpi_category>,"S8A1-S8A3, S8B, S8C, S10B, poverty",item amounts + expenditure_cpi_mapping.csv,"annualise each module's recall, sum by cpi_category, divide by total",Household-specific CPI weights. Use exp1-exp11 to scale modules to NISR totals.
+CPI linkage,cpi_change_jan2024_sep2026_<category>,cpi_features.parquet,index_value,"index(2026-09) / index(2024-01) - 1, by cpi_area",January 2024 is the price base of sol_jan.
+CPI linkage,hh_inflation_jan2024_sep2026,derived,budget shares x category changes,sum over categories,Inflation exposure of each household's own basket.
+CPI linkage,cons_real_ae_sep2026,derived,"sol_jan, headline CPI change",sol_jan x (1 + headline change for cpi_area),Optional: express welfare in current prices.
+Demographics,"head_sex, head_age, head_marital_status",person,"s1q1, s1q3y, s1q4 where s1q2 = head",head's values,One head per household (checked).
+Demographics,"n_children_0_14, n_adults_15_64, n_elderly_65plus, dependency_ratio",person,s1q3y,counts,
+Demographics,n_members_with_disability,person,s3q7-s3q12,count of members with any 'a lot of difficulty' or 'cannot do',Washington Group short set.
+Education,"head_education_level, head_literate",person,"s4aq2, s4aq3, s4bq4",head's values,
+Education,"max_education_any_member, n_children_in_school",person,"s4aq2, s4aq7, s1q3y",max / count,
+Employment,"head_employed, head_sector, head_status",person,"s6aq2-s6aq9, s6bq4, s6bq7",head's values,ISIC level 1 in s6bq4.
+Employment,"n_employed, n_wage_workers, any_nonfarm_business",person,s6aq2-s6aq7,counts / any,
+Income,wage_earnings_annual,person,"s6bq9a, s6bq9b","convert amount by unit to annual, sum over members",Needs unit harmonisation; main job only.
+Income,income_<source group>_12m,other_income,"s9eq1, s9eq4","deduplicate, then sum by group","Groups: pensions (1, 12, 13), public transfers (3-5, 7, 8, 10, 22), farm (24-26), property and financial (17, 18, 20, 21), other."
+Income,remittances_received_12m,transfers_in,s9bq8,"deduplicate, then sum",
+Income,transfers_sent_12m,transfers_out,"s9aq7, s9aq10, s9aq12","deduplicate, then sum",
+Social protection,vup_any,vup_* files,"s9d1q2, s9d2q1, s9d3q1, s9d4q1, s9d5q1",1 if any component flag is yes,Do not use s9d1q1: despite its label it only flags the component of the file it is in.
+Social protection,"vup_direct_support, vup_ds_amount_12m",vup_direct_support,"s9d1q2, s9d1q4",any / sum over beneficiary rows,
+Social protection,"vup_classic_pw, vup_cpw_months, vup_cpw_amount_12m",vup_classic_pw,"s9d2q1, s9d2q3, s9d2q11",as is,
+Social protection,"vup_expanded_pw, vup_epw_amount_12m",vup_expanded_pw,"s9d3q1, s9d3q10",any / sum,
+Social protection,"nsds, nsds_quarters_paid, nsds_amount",vup_nsds,"s9d4q1, s9d4q7, s9d4q8",any / as is,s9d4q8 is labelled 'first quarter' but is the only filled amount; s9d4q8a-d are almost empty. Confirm the definition in the questionnaire.
+Social protection,"vup_fs_applied, vup_fs_loan_amount",vup_financial_services,"s9d5q1, s9d5q2, s9d5q4",as is,
+Social protection,girinka_cow,household,s7a2q1,1 if yes,One Cow per Poor Family.
+Social protection,share_members_health_insured,person,s3q2,share of members,
+Financial inclusion (EICV7),"any_account, any_bank_account, any_sacco_account, any_mobile_money_account",savings,"s10cq4, s10cq5",any member,"Institution codes: 1-3 bank/MFI, 4 SACCO, 5-6 mobile money."
+Financial inclusion (EICV7),any_tontine,savings,s10cq8,any member,
+Financial inclusion (EICV7),"any_loan_outstanding, any_formal_loan, n_loans",credit,"s10aq3, s10aq6",any / count,"Formal: bank, MFI, SACCO, cooperative, VUP."
+Financial inclusion (EICV7),"any_member_mobile_money_use, any_member_phone",person,"s4bq23c, s4bq8",any member,
+Financial inclusion (FinScope),fs_<indicator>_district_ur,finscope,"qf3_*, qf4_*, k1, f3, f6, l1, g11a, i4a, h3","pop_wt-weighted share of adults, by a2 x a6",Area-level context only; FinScope is a different sample. Cells have 96-607 respondents.
+Housing and utilities,"dwelling_type, tenure, n_rooms",household,"s5aq2, s5aq7, s5aq8, s5aq3",as is,
+Housing and utilities,"wall, roof, floor material",household,"s5dq1, s5dq2, s5dq3",as is,
+Housing and utilities,"drinking_water_source, grid_connected, lighting_source, cooking_fuel, toilet_type, internet_at_home",household,"s5cq3, s5cq14, s5cq16, s5cq22a, s5cq25, s5cq20a",as is,
+Assets,"owns_<durable>, n_<durable>",durables,"s10bq0, s10bq2",pivot wide by item,"Radio, TV, phones, computer, fridge, bicycle, motorcycle, car."
+Assets,durables_current_value,durables,s10bq5a-c,sum,
+Assets,"n_cattle ... n_poultry, tropical_livestock_units",household,s7aq4a-f,as is; TLU weights,
+Service access,minutes_to_<service>,services,"s5fq0, s5fq3a, s5fq3b","hours x 60 + minutes, pivot wide by service","Water, food market, public transport, primary school, health centre, sector office."
+Shocks,"any_shock_12m, main_shock",household,"s5eq1, s5eq2a",as is,

@@ -1,0 +1,68 @@
+{
+  "built": "2026-10-29",
+  "survey": {
+    "name": "EICV7",
+    "start": "2023-10-16",
+    "end": "2024-10-15",
+    "households_sampled": 15054
+  },
+  "price_base_month": "2024-01",
+  "latest_cpi_month": "2026-09",
+  "min_cell_sample": 30,
+  "categories": [
+    "food",
+    "energy",
+    "transport",
+    "education",
+    "other"
+  ],
+  "payments": {
+    "nsds_programme_rate_quarterly_rwf": 30500,
+    "ds_simulation_assumption_quarterly_rwf": 30500,
+    "ds_observed_median_annual_rwf": 90000.0
+  },
+  "holdout_households": 3022,
+  "holdout": {
+    "poverty_roc_auc": {
+      "value": 0.9035442006871336,
+      "ci_low": 0.8914833742980898,
+      "ci_high": 0.9152761440355764
+    },
+    "poverty_pr_auc": {
+      "value": 0.7639377532402137,
+      "ci_low": 0.7358819742914298,
+      "ci_high": 0.7932425245895642
+    },
+    "poverty_precision_top20": {
+      "value": 0.7309373228351871,
+      "ci_low": 0.6860931344538659,
+      "ci_high": 0.7773436600577899
+    },
+    "poverty_poor_people_reached_top20": {
+      "value": 0.6622660039467118,
+      "ci_low": 0.632627567672589,
+      "ci_high": 0.6944326771657061
+    },
+    "poverty_calibration_slope": {
+      "value": 0.9349390178811312,
+      "ci_low": null,
+      "ci_high": null
+    },
+    "vup_roc_auc": {
+      "value": 0.7138447500927595,
+      "ci_low": 0.6512345879643228,
+      "ci_high": 0.7656082386812135
+    },
+    "vup_pr_auc": {
+      "value": 0.2342165423280594,
+      "ci_low": 0.1662617464782482,
+      "ci_high": 0.3208912314824599
+    }
+  },
+  "cross_fitted": {
+    "precision_top20": 0.7243095835172696,
+    "poor_people_reached_top20": 0.6707691421687054,
+    "ds_2pp_households": 65796.38551094447,
+    "ds_2pp_uncovered_high_need_after": 546833.5696638908
+  }
+}

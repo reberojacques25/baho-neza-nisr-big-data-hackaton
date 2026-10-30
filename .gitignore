@@ -1,0 +1,69 @@
+# ---------------------------------------------------------------------------
+# Baho Neza .gitignore. Release contents are listed explicitly in docs/release_manifest.txt;
+# this file is a safety net, not the release rule.
+# ---------------------------------------------------------------------------
+
+# NISR / AFR microdata: licensed, never commit
+Microdata/
+FINSCOPE_DATA/
+*.dta
+*.sav
+*.zsav
+
+# Interim and household-level outputs (private; rebuilt from microdata offline)
+data/interim/
+data/processed/household_*.parquet
+data/processed/poverty_scores*.parquet
+data/processed/vup_gap_scores.parquet
+data/processed/model_splits.parquet
+data/processed/district_model_drivers.parquet
+# scenario_results is aggregated but contains small district cells; the dashboard_* tables below are offline
+# reference tables that the public app does not use
+data/processed/scenario_results.parquet
+data/processed/dashboard_data.parquet
+data/processed/dashboard_profiles.parquet
+data/processed/dashboard_drivers.parquet
+
+# Trained model artefacts (training artefacts are not published; metadata *.json is)
+models/*.joblib
+*.pkl
+*.pickle
+
+# Per-household explanations and per-household scatter plots (individual records by nature).
+# Redacted public copies of other sensitive reports are published; their originals live in private/.
+reports/interpretation/local_explanations_*
+reports/interpretation/shap_dependence_*.png
+
+# Third-party source documents (cited with links in docs; not redistributed)
+docs/source_documentation/
+
+# Secrets and credentials (placeholder template .streamlit/secrets.example.toml IS tracked)
+.streamlit/secrets.toml
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+service_account*.json
+
+# Python, notebooks, tests, editors
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.log
+.DS_Store
+.idea/
+.vscode/
+catboost_info/
+
+
+# Private originals of files published in redacted form (never commit)
+private/

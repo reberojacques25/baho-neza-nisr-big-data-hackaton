@@ -1,0 +1,11 @@
+# Baho Neza app runtime (Streamlit Community Cloud reads this file first: it sits next to the entry point app.py).
+# Aggregated tables only; no modelling libraries. The full analysis environment is ../../requirements.txt.
+streamlit==1.66.0
+pandas==3.0.3
+numpy==2.5.4
+pyarrow==26.0.0
+plotly==7.1.0
+pyyaml==6.0.3
+matplotlib==3.11.2      # district planning brief PDF (bundled DejaVu Sans font; no network)
+google-genai==2.34.0    # optional AI explanations; off unless configured in Streamlit secrets
+httpx==0.28.1           # imported by the AI service for timeout handling (also a google-genai dependency)

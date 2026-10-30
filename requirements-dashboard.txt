@@ -1,0 +1,2 @@
+# Baho Neza app only (local run). Same pinned set Streamlit Community Cloud uses: src/dashboard/requirements.txt
+-r src/dashboard/requirements.txt

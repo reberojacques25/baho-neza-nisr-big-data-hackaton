@@ -1,0 +1,23 @@
+survey,dataset,0%,0-5%,5-50%,50-95%,95-<100%,100% (empty),median_pct_missing
+EICV7,credit,13,0,6,1,0,0,0.0
+EICV7,durables,14,0,0,4,1,0,0.0
+EICV7,food,20,0,0,12,36,0,95.9
+EICV7,food_away,16,0,0,16,40,0,95.25999999999999
+EICV7,household,42,6,22,30,12,0,23.17
+EICV7,nonfood_annual,14,0,0,2,1,0,0.0
+EICV7,nonfood_monthly,14,0,0,2,1,0,0.0
+EICV7,nonfood_weekly,14,0,0,3,4,0,0.0
+EICV7,other_expenditure,13,0,0,0,0,0,0.0
+EICV7,other_income,13,0,0,2,0,0,0.0
+EICV7,person,26,1,34,76,20,0,68.52
+EICV7,poverty,31,1,0,0,0,0,0.0
+EICV7,savings,12,3,2,1,1,0,0.0
+EICV7,services,13,0,6,2,0,1,0.0
+EICV7,transfers_in,12,0,8,0,0,2,0.0
+EICV7,transfers_out,12,9,1,3,0,0,2.41
+EICV7,vup_classic_pw,6,0,0,0,34,0,97.47
+EICV7,vup_direct_support,6,0,0,0,31,0,97.08
+EICV7,vup_expanded_pw,5,1,0,0,35,0,97.79
+EICV7,vup_financial_services,6,0,0,0,16,1,97.79
+EICV7,vup_nsds,5,1,0,0,37,3,96.27
+FinScope 2024,finscope,396,27,455,891,551,122,78.01

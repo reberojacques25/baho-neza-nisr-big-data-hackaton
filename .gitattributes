@@ -1,0 +1,2 @@
+# Store notebooks without outputs (outputs can show household-level survey rows); see tools/strip_notebook_outputs.py
+*.ipynb filter=strip-notebook-outputs

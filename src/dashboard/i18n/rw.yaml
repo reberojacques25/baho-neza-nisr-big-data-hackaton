@@ -1,0 +1,669 @@
+# Baho Neza: Kinyarwanda text. Same keys and {placeholders} as en.yaml (tests check parity).
+# REVIEW STATUS: machine-drafted with AI help; NOT yet reviewed by a native speaker. Review before public use.
+
+app:
+  name: Baho Neza
+  tagline: Tegura ubufasha bunoze ku baturage bawe.
+  persistent: Ibi ni igereranya ryo gutegura. Amabwiriza yemewe yo guhitamo abagenerwabikorwa n'igenzura biracyakurikizwa.
+
+nav:
+  overview: Incamake
+  community: Abaturage bacu
+  prices: Ibiciro biramutse bizamutse?
+  compare: Gereranya ubufasha
+  how_it_works: Uko bikora
+  data_limits: Amakuru n'aho agarukira
+
+lang:
+  label: Ururimi
+
+footer:
+  credits: "Baho Neza · Amakuru y'ubushakashatsi: NISR EICV7 (2023/24). Ibiciro: Igipimo cy'ibiciro ku baguzi (CPI) cya NISR. Imbibi: geoBoundaries (CC BY 4.0). Imibare ihurijwe hamwe gusa; nta makuru y'urugo na rumwe agaragazwa."
+
+errors:
+  missing_tables: "Imbonerahamwe z'igenamigambi zihurijwe hamwe ntizibonetse. Zikore ukoresheje: python -m src.dashboard.build_planning"
+  suppressed: "Ntibigaragazwa kuri aya mahitamo: ingo zabajijwe ni nke cyane ku buryo zitatangazwa mu mutekano. Hitamo agace kagari cyangwa akarere kose."
+  geography: Uku guhuza ahantu n'agace ntikuboneka.
+  increase_range: Izamuka ry'ibiciro rigomba kuba hagati ya 0% na 100%.
+  unknown_mode: Hitamo izamuka rimwe ku biciro byose cyangwa amazamuka atandukanye.
+  horizon: Hitamo igihe cy'amezi 3, 6 cyangwa 12.
+  unknown_category: Kimwe mu byiciro by'ikoreshwa ry'amafaranga ntigishyigikiwe.
+  action_unavailable: Ubu bwoko bw'ubufasha ntiburaboneka muri Baho Neza.
+  unknown_action: Ubu bwoko bw'ubufasha ntibuzwi.
+  duration: Hitamo igihe cy'amezi 0, 3, 6 cyangwa 12.
+  delivery_range: Ikiguzi cyo kugeza ubufasha kigomba kuba hagati ya 0% na 100% by'amafaranga yatanzwe.
+  planning_group: Iri tsinda ry'igenamigambi ntiriboneka.
+  frequency: Hitamo kwishyura buri kwezi cyangwa buri gihembwe.
+  duration_frequency: Igihe kigomba kuba umubare wuzuye w'ibihe byo kwishyura.
+  amount_range: Amafaranga ntashobora kuba munsi ya zeru.
+  ds_level: Hitamo kimwe mu bipimo byo kwagura byatanzwe.
+
+context:
+  geography: Ahantu
+  survey: Ubushakashatsi
+  cpi: Ibiciro biheruka
+  scenario: Igerageza
+  survey_period: "EICV7, {start} kugeza {end}"
+
+scenario:
+  label_simple: "+{pct}% ku biciro byose mu mezi {months} ari imbere, uhereye {base}"
+  label_detailed: "Amazamuka atandukanye ku byiciro mu mezi {months} ari imbere, uhereye {base}"
+
+state:
+  stale_price: Amahitamo yahindutse. Ongera ubare.
+  stale_compare: Amahitamo yahindutse. Ongera ugereranye.
+
+source:
+  survey: Imibare y'ubushakashatsi
+  model: Igereranya rya moderi
+  scenario: Igerageza
+
+common:
+  hidden: Ntibigaragazwa (icyitegererezo gito)
+  ci: "Intera ya 95%: {ci}"
+  ci_header: Intera ya 95%
+
+units:
+  rwf: "{v} Frw"
+  million_rwf: "Miliyoni {v} Frw"
+  billion_rwf: "Miliyari {v} Frw"
+  month_year: "{month} {year}"
+  months: "Amezi {n}"
+
+months:
+  m1: Mutarama
+  m2: Gashyantare
+  m3: Werurwe
+  m4: Mata
+  m5: Gicurasi
+  m6: Kamena
+  m7: Nyakanga
+  m8: Kanama
+  m9: Nzeri
+  m10: Ukwakira
+  m11: Ugushyingo
+  m12: Ukuboza
+
+geo:
+  label: Ahantu
+  district: Akarere
+  rwanda: U Rwanda rwose
+  place_area: "{place} · {area}"
+
+area:
+  label: Agace
+  all: Ibice byose
+  urban: Umujyi
+  rural: Icyaro
+
+indicator:
+  poverty:
+    name: Amahirwe yo kuba mu bukene (igereranya)
+    unit: Impuzandengo y'amahirwe (%)
+    help: "Igereranya rya moderi: impuzandengo y'amahirwe yateganyijwe y'uko urugo ruri munsi y'umurongo w'ubukene, hashingiwe ku bisubizo by'ubushakashatsi. Ni ikimenyetso cyo gutegura, si uko urugo runaka rukennye."
+  price:
+    name: Umutwaro w'ibiciro ku ngo
+    unit: Ihinduka ry'ikiguzi cy'ibyo urugo rugura (%)
+    help: "Uko ibyo urugo rugura bimwe bihenda ku biciro biheruka ugereranyije na Mutarama 2024, hakoreshejwe CPI yemewe yo mu mujyi cyangwa mu cyaro."
+  need:
+    name: Urwego rw'ubukene bukabije
+    unit: Ingo zifite ibikenewe byinshi (%)
+    help: "Igice cy'ingo ziri mu gatanu ka mbere ku rwego rw'igihugu ku gipimo cy'ingorane (ibiciro, igice cy'ibiryo, ubukene, kutagira amafaranga ahoraho, kuzigama n'inguzanyo). VUP ntibarirwa muri iki gipimo."
+  coverage:
+    name: Ingo zifite ibikenewe byinshi zigerwaho na VUP
+    unit: Zigerwaho (%)
+    help: "Igice cy'ingo zifite ibikenewe byinshi zabonye nibura igice kimwe cya VUP mu mwaka w'ubushakashatsi (uko byagaragaye)."
+
+finding:
+  none: Nta gipimo hano gitandukanye bigaragara n'urwego rw'igereranya iyo hitawe ku kudashidikanya k'ubushakashatsi.
+  poverty_rate:
+    higher: "Igipimo cy'ubukene kiri hejuru y'icy'u Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+    lower: "Igipimo cy'ubukene kiri hasi y'icy'u Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+  high_need_share:
+    higher: "Ingo zifite ibikenewe byinshi ni nyinshi kurusha mu Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+    lower: "Ingo zifite ibikenewe byinshi ni nke kurusha mu Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+  high_need_vup_coverage:
+    higher: "VUP yageze ku ngo nyinshi zifite ibikenewe byinshi kurusha mu Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+    lower: "VUP yageze ku ngo nke zifite ibikenewe byinshi kurusha mu Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+  basket_change_pct:
+    higher: "Ibyo urugo rugura byazamutse cyane mu biciro kurusha mu Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+    lower: "Ibyo urugo rugura byazamutse gake mu biciro kurusha mu Rwanda rwose: {value} ({ci}) ugereranyije na {ref}."
+
+finding_area:
+  poverty_rate:
+    rural_higher: "Igipimo cy'ubukene kiri hejuru mu cyaro ({rural}) kurusha mu mujyi ({urban})."
+    rural_lower: "Igipimo cy'ubukene kiri hasi mu cyaro ({rural}) kurusha mu mujyi ({urban})."
+  high_need_share:
+    rural_higher: "Ingo zo mu cyaro zifite ibikenewe byinshi ni nyinshi ({rural}) kurusha izo mu mujyi ({urban})."
+    rural_lower: "Ingo zo mu cyaro zifite ibikenewe byinshi ni nke ({rural}) kurusha izo mu mujyi ({urban})."
+  high_need_vup_coverage:
+    rural_higher: "VUP yageze ku ngo nyinshi zifite ibikenewe byinshi mu cyaro ({rural}) kurusha mu mujyi ({urban})."
+    rural_lower: "VUP yageze ku ngo nke zifite ibikenewe byinshi mu cyaro ({rural}) kurusha mu mujyi ({urban})."
+  basket_change_pct:
+    rural_higher: "Ibyo ingo zo mu cyaro zigura byazamutse cyane mu biciro ({rural}) kurusha ibyo mu mujyi ({urban})."
+    rural_lower: "Ibyo ingo zo mu cyaro zigura byazamutse gake mu biciro ({rural}) kurusha ibyo mu mujyi ({urban})."
+
+compare_groups:
+  head_sex:
+    poverty_rate:
+      first_higher: "Ubukene buri hejuru mu ngo ziyobowe n'abagore ({a}) kurusha mu ngo ziyobowe n'abagabo ({b})."
+      first_lower: "Ubukene buri hasi mu ngo ziyobowe n'abagore ({a}) kurusha mu ngo ziyobowe n'abagabo ({b})."
+    high_need_share:
+      first_higher: "Ingo ziyobowe n'abagore zikunze kugira ibikenewe byinshi ({a}) kurusha iziyobowe n'abagabo ({b})."
+      first_lower: "Ingo ziyobowe n'abagore ntizikunze kugira ibikenewe byinshi ({a}) kurusha iziyobowe n'abagabo ({b})."
+  disability:
+    poverty_rate:
+      first_higher: "Ubukene buri hejuru mu ngo zirimo umuntu ufite ubumuga ({a}) kurusha mu zindi ngo ({b})."
+      first_lower: "Ubukene buri hasi mu ngo zirimo umuntu ufite ubumuga ({a}) kurusha mu zindi ngo ({b})."
+    high_need_share:
+      first_higher: "Ingo zirimo umuntu ufite ubumuga zikunze kugira ibikenewe byinshi ({a}) kurusha izindi ngo ({b})."
+      first_lower: "Ingo zirimo umuntu ufite ubumuga ntizikunze kugira ibikenewe byinshi ({a}) kurusha izindi ngo ({b})."
+  elderly:
+    poverty_rate:
+      first_higher: "Ubukene buri hejuru mu ngo zirimo umuntu ufite imyaka 65 cyangwa irenga ({a}) kurusha mu zindi ngo ({b})."
+      first_lower: "Ubukene buri hasi mu ngo zirimo umuntu ufite imyaka 65 cyangwa irenga ({a}) kurusha mu zindi ngo ({b})."
+    high_need_share:
+      first_higher: "Ingo zirimo umuntu ufite imyaka 65 cyangwa irenga zikunze kugira ibikenewe byinshi ({a}) kurusha izindi ngo ({b})."
+      first_lower: "Ingo zirimo umuntu ufite imyaka 65 cyangwa irenga ntizikunze kugira ibikenewe byinshi ({a}) kurusha izindi ngo ({b})."
+
+group:
+  head_sex:
+    female: Ingo ziyobowe n'abagore
+    male: Ingo ziyobowe n'abagabo
+  disability:
+    "yes": Harimo umuntu ufite ubumuga
+    "no": Nta muntu ufite ubumuga
+  elderly:
+    "yes": Harimo umuntu ufite imyaka 65 cyangwa irenga
+    "no": Nta muntu ufite imyaka 65 cyangwa irenga
+  poverty:
+    poor: Munsi y'umurongo w'ubukene (2023/24)
+    nonpoor: Hejuru y'umurongo w'ubukene (2023/24)
+
+category:
+  food: Ibiryo
+  energy: Ingufu n'ibikomoka kuri peteroli
+  transport: Ingendo
+  education: Ibisabwa ku ishuri
+  other: Ibindi bicuruzwa na serivisi
+  food_help: Ibiryo n'ibinyobwa bidasindisha biribwa mu rugo.
+  energy_help: Amashanyarazi, gaz, amakara, inkwi, peteroli n'amavuta y'ibinyabiziga.
+  transport_help: Itike, ibinyabiziga n'isana ryabyo (amavuta y'ibinyabiziga ari mu ngufu).
+  education_help: Amafaranga y'ishuri n'ibindi byishyurwa ku mashuri.
+  other_help: Ibindi byose urugo rugura, harimo ubukode, ubuvuzi, itumanaho, imyambaro n'amafunguro afatirwa hanze.
+
+overview:
+  title: Tegura ubufasha bunoze ku baturage bawe.
+  question: Reba aho ibikenewe biri, gerageza uko izamuka ry'ibiciro ryagira ingaruka ku ngo, kandi ugereranye ikiguzi cy'ubufasha.
+  cta_explore: Sura akarere kanjye
+  cta_prices: Gerageza ihinduka ry'ibiciro
+  kpi:
+    basket:
+      label: Ikiguzi cy'ibyo urugo rugura bimwe
+      sub: "Urugo rusanzwe, {base} kugeza {latest}"
+    poverty:
+      label: Abantu bari munsi y'umurongo w'ubukene
+      sub: Igice cy'abantu bose, EICV7 2023/24
+    gap:
+      label: Ingo zifite ibikenewe byinshi zitabona ubufasha bwa VUP
+      sub: "{share} by'ingo {total} zifite ibikenewe byinshi, 2023/24"
+    basket_cost:
+      label: Impuzandengo y'ibyo urugo rugura ku kwezi
+      sub: "Ku biciro bya {latest}; ni ho igerageza ry'ibiciro rihera"
+  flow_title: Intambwe eshatu
+  flow:
+    understand: Menya ibikenewe
+    test: Gerageza ihinduka ry'ibiciro
+    compare: Gereranya ibisubizo
+  note: Imibare isobanura ingo uko zabajijwe muri 2023/24. Si urutonde ruhora ruvugururwa.
+
+community:
+  title: Abaturage bacu
+  question: Ni hehe ubufasha bukenewe?
+  indicator: Erekana ku ikarita
+  price_note: "Itandukaniro ry'ikiguzi hagati y'uturere riterwa n'ibyo ingo zigura n'igipimo cy'ibiciro cyo mu mujyi cyangwa mu cyaro. NISR ntitangaza ibipimo by'ibiciro by'akarere."
+  gap_households: Ingo zifite ibikenewe byinshi zitabona VUP
+  rank: "Umwanya kuri {name}: hagati ya {best} na {worst} mu turere {n} (1 = umutwaro munini). Imyanya yegeranye akenshi ntitandukanye bigaragara."
+  rank_exact: "Umwanya kuri {name}: {rank} mu turere {n} (1 = umutwaro munini)."
+  panel_note: Intera zigaragaza kudashidikanya k'ubushakashatsi (95%).
+  table_view: Ikarita mu buryo bw'imbonerahamwe
+  findings_title: Ibigaragara cyane
+  findings_note: Hagaragazwa gusa itandukaniro rihama iyo hitawe ku kudashidikanya k'ubushakashatsi (bitarenze bitatu).
+  groups_title: Uko amatsinda agereranywa
+  groups:
+    group: Itsinda
+    households: Ingo
+  groups_note: Imirongo ihishwa iyo itsinda rimwe muri abiri rifite ingo nke cyane zabajijwe.
+  gaps_title: Ibyuho by'ubufasha byagaragaye
+  gap_share: Ingo zifite ibikenewe byinshi zitabona VUP
+  gap_share_sub: "Igice cy'ingo {total} zifite ibikenewe byinshi"
+  predicted_title: Uko VUP iteganyijwe kugera ku ngo (moderi)
+  predicted:
+    measure: Igipimo
+    observed: Ingo zifite ibikenewe byinshi zagezweho na VUP (byagaragaye)
+    predicted: Uko VUP iteganyijwe kugera ku ngo zisa (moderi)
+  predicted_body: "Moderi ya VUP iteganya uko igera ku ngo hashingiwe ku miterere y'ingo VUP yagezeho muri 2023/24. Iyo bitaganyijwe hasi, bivuze ko ingo zimeze zityo zitagerwaho kenshi ubu. Ntibigaragaza ko hari uwahejwe ku buryo butemewe, kandi si icyemezo cyo kwemererwa ubufasha."
+  gaps_note: "Ibi byerekana aho ubufasha bushobora kuba budahagije. Ntibivuze ko hari uwahejwe ku buryo butemewe."
+
+map:
+  legend_missing: Ntibigaragazwa (icyitegererezo gito)
+  legend_selected: Akarere kahiswemo
+
+brief:
+  title: Inyandiko y'igenamigambi ry'akarere
+  hidden: Ntibigaragazwa (icyitegererezo gito)
+  ci: "Intera ya 95% {ci}"
+  price_window: "{base} kugeza {latest}"
+  no_scenario: Nta gerageza rihari ubu (ribare ku rupapuro rw'ibiciro cyangwa urw'ubufasha).
+  includes_scenario: Iyi nyandiko irimo igerageza ryawe rya none.
+  excludes_scenario: "Iyi nyandiko ivuga ibikenewe gusa. Bara igerageza ry'ibiciro kugira ngo ribe ririmo."
+  download_csv: Kuramo inyandiko (CSV)
+  download_pdf: Kuramo inyandiko (PDF)
+  filename: "baho-neza-inyandiko-{place}-{area}-{date}.{ext}"
+  footer: "Inyandiko y'igenamigambi ry'akarere ya Baho Neza. Ni igikoresho cyo gutegura, si inyandiko ya Leta yemejwe. Imibare y'ubushakashatsi ihurijwe hamwe gusa."
+  section:
+    about: Ibyerekeye iyi nyandiko
+    indicators: Ibipimo by'ingenzi
+    findings: Ibigaragara cyane
+    scenario: Igerageza ry'ibiciro
+    support: Igereranya ry'ubufasha
+    notes: Ibisobanuro
+  item:
+    title: Inyandiko
+    geography: Ahantu
+    generated: Yakozwe ku itariki
+    survey: Igihe cy'ubushakashatsi
+    prices: Ihinduka ry'ibiciro ryapimwe
+    scenario: Igerageza
+    programme: Gahunda
+    suppression: Ibyitegererezo bito
+    sources: Inkomoko
+    use: Imikoreshereze ikwiye
+  note:
+    survey: Ingo uko zabajijwe; si urutonde ruhora ruvugururwa.
+    reference_monthly: "Ibyo urugo rugura bimwe ku biciro bya {latest}, impuzandengo ku rugo"
+    per_household: Ku rugo ku kwezi
+    duration: "Mu mezi {months}"
+    suppression: "Imibare ishingiye ku ngo ziri munsi ya {n} zabajijwe irahishwa, kandi n'indi mibare irahishwa aho gukuramo byayigaragaza."
+    sources: "NISR EICV7 (2023/24); Igipimo cy'ibiciro ku baguzi cya NISR (umujyi n'icyaro); moderi z'ubukene n'iza VUP za Baho Neza."
+    not_official: Si inyandiko ya Leta yemejwe.
+  indicator:
+    poverty_rate: Abantu bari munsi y'umurongo w'ubukene
+    poverty_likelihood: Amahirwe yo kuba mu bukene (igereranya)
+    high_need_share: Ingo zifite ibikenewe byinshi
+    high_need_vup_coverage: Ingo zifite ibikenewe byinshi zigerwaho na VUP
+    basket_change_pct: Ikiguzi cy'ibyo urugo rugura bimwe kuva Mutarama 2024
+    protection_gap_households: Ingo zifite ibikenewe byinshi zitabona VUP
+    reference_monthly: Impuzandengo y'ibyo urugo rugura ku kwezi
+  column:
+    section: Igice
+    item: Ikintu
+    value: Agaciro
+    note: Icyitonderwa
+
+prices:
+  title: Ibiciro biramutse bizamutse?
+  question: Ihinduka ry'ibiciro ryagira izihe ngaruka ku baturage bacu?
+  baseline_title: Aho bihera
+  baseline: "Ibiciro uko byapimwe muri {latest}, ukwezi guheruka kw'Igipimo cy'ibiciro ku baguzi. Ihinduka kuva {base} ryamaze kubarirwa mu kiguzi cy'uyu munsi."
+  horizon: Mu gihe kiri imbere cy'…
+  not_inflation: "Shyiramo izamuka ry'inyongera ku biciro by'uyu munsi, riteranyijwe mu gihe cyose. Si igipimo cy'izamuka ry'ibiciro ku mwaka."
+  mode: Uko ibiciro bihinduka
+  mode_simple: Ibiciro byose hamwe
+  mode_detailed: Ku cyiciro cy'ikoreshwa
+  all_increase: Ibiciro byose bizamuka ku…
+  increase:
+    food: Ibiciro by'ibiryo bizamuka ku…
+    energy: Ibiciro by'ingufu n'amavuta bizamuka ku…
+    transport: Ibiciro by'ingendo bizamuka ku…
+    education: Ibisabwa ku ishuri bizamuka ku…
+    other: Ibindi biciro bizamuka ku…
+  assumption:
+    earnings: "Icyo dufata nk'ukuri: amafaranga ingo zinjiza n'ibindi zifite ntibihinduka mu mafaranga."
+    earnings_only: Guhindura amafaranga yinjizwa ntibitangwa, kuko ubushakashatsi budapima amafaranga yinjizwa neza bihagije.
+  calculate: Erekana ibisubizo
+  prompt: Hitamo igihe n'izamuka ry'ibiciro, hanyuma ukande Erekana ibisubizo.
+  result_title: Ibisubizo by'igerageza
+  result:
+    basket_change: Ihinduka ry'ikiguzi cy'ibyo urugo rugura
+    basket_change_sub: Ibyo urugo rugura bimwe, ibiciro by'igerageza ugereranyije n'iby'uyu munsi
+    extra_monthly: Ikiguzi cy'inyongera ku rugo ku kwezi
+    extra_monthly_sub: "Ibyo urugo rugura uyu munsi: {ref} ku kwezi"
+    purchasing_power: Ubushobozi bwo kugura
+    purchasing_power_sub: Ibyo amafaranga amwe agura, niba ayinjizwa adahindutse
+    extra_total: Ikiguzi cy'inyongera ku ngo zose ku kwezi
+    extra_total_sub: "Ingo {households} aha hantu"
+  by_category: Aho ikiguzi cy'inyongera giturutse (ku rugo ku kwezi)
+  table:
+    category: Icyiciro
+    reference: Uyu munsi
+    increase: Izamuka
+    extra: Ikiguzi cy'inyongera
+  exposed_title: Amatsinda yibasiwe cyane
+  exposed_note: Itandukaniro hagati y'amatsinda riterwa gusa n'ibyo agura. Amatsinda afite ingo nke zabajijwe ntagaragazwa.
+  exposed_uniform: "Iyo ibiciro byose bizamutse kimwe, ibyo urugo rugura byose bizamuka ku ijanisha rimwe; amatsinda atandukanira gusa ku mafaranga. Koresha amazamuka atandukanye ku byiciro kugira ngo urebe amatsinda yibasiwe kurusha ayandi."
+  no_shortfall: "Ihinduka ry'ubukene n'ibura ry'amafaranga ntibigaragazwa: byasaba kuvugurura umurongo w'ubukene byemejwe n'uko ingo zihinduka."
+  to_compare: Koresha iri gerageza ugereranye ubufasha
+  left_out_title: Ibyo iri gerageza ritabariramo
+  left_out: |
+    - Ingo zihindukira ku bicuruzwa bihendutse, byagabanya ikiguzi cy'inyongera.
+    - Ingo z'abahinzi bagurisha ibiribwa bashobora kunguka iyo ibiciro by'ibiribwa bizamutse.
+    - Ingaruka zagutse ku mirimo, imishahara n'ubucuruzi.
+  not_forecast: Igerageza, si iteganyagihe.
+
+compare:
+  title: Gereranya ubufasha
+  question: Ni ikihe gisubizo cyafasha, kandi cyatwara angahe?
+  carried: "Uru rupapuro rukoresha igerageza ry'ibiciro ryo kuri **Ibiciro biramutse bizamutse?** Rihindurire aho, cyangwa uhitemo nta hinduka rishya ry'ibiciro."
+  edit_price: Hindura igerageza ry'ibiciro
+  reset_price: Nta hinduka rishya ry'ibiciro
+  action: Ubwoko bw'ubufasha
+  unavailable_title: Ubundi bwoko bw'ubufasha (ntiburaboneka)
+  rule: Itsinda ry'igenamigambi
+  level: Ingano y'itsinda
+  level_all: Ingo zose ziri mu itsinda
+  level_share: "{pct}% bya mbere by'ingo aha hantu"
+  amount: Amafaranga kuri buri kwishyura (Frw ku rugo)
+  amount_help: Ni icyo wowe ufata nk'ukuri mu gutegura. Si igipimo cya gahunda.
+  frequency: Inshuro zo kwishyura
+  ds_level: Ingano yo kwagura
+  ds_level_value: "+{pp} ku ijana by'ingo zose zo mu Rwanda"
+  ds_payment: Amafaranga y'Inkunga y'ingoboka ku gihembwe (Frw ku rugo)
+  ds_payment_help: "Icyo dufata nk'ukuri gitandukanye n'icya NSDS. Igerageza ryemejwe ryakoresheje {sim} ku gihembwe; amafaranga yo hagati y'Inkunga y'ingoboka yagaragaye yari {median} ku mwaka, kandi amafaranga nyayo ahinduka bitewe n'ingano y'urugo."
+  nsds_pct: Izamuka ry'amafaranga ya NSDS
+  nsds_note: Bireba ingo zisanzwe zihabwa NSDS, hakoreshejwe amafaranga zahawe. Ntibyongera abagenerwabikorwa bashya.
+  duration: Mu gihe kingana iki
+  delivery: Ikiguzi cyo kugeza ubufasha (% by'amafaranga yatanzwe)
+  delivery_help: Si ngombwa. Siga 0 niba ikiguzi cyo kugeza ubufasha kitazwi.
+  run: Gereranya
+  prompt: Hitamo ubwoko bw'ubufasha, hanyuma ukande Gereranya.
+  result_title: Igereranya
+  group_cash: "{rule} · {level}"
+  payment_cash: "{amount} kuri buri kwishyura, {frequency}"
+  group_ds: "Ingo nshya z'Inkunga y'ingoboka zivuye mu kwagura ku rwego rw'igihugu ku +{pp}, zatoranyijwe hakurikijwe amahirwe yo kuba mu bukene mu ngo zitabona VUP"
+  payment_ds: "{amount} ku gihembwe (icyo dufata nk'ukuri)"
+  group_nsds: Ingo zisanzwe zihabwa NSDS
+  payment_nsds: "+{pct}% by'amafaranga yahawe ku gihembwe, hafi {amount} y'inyongera ku gihembwe"
+  scope:
+    geography: Ahantu
+    period: Igihe
+    programme: Gahunda
+    group: Abagenerwabikorwa
+    payment: Kwishyura
+    prices: Ibiciro
+    assumptions: Ibyo dufata nk'ukuri
+  period: "Amezi {months} uhereye {latest} (inshuro {payments} zo kwishyura)"
+  assumptions: "Abagenerwabikorwa uko babajijwe muri 2023/24; nta myitwarire cyangwa amafaranga yinjizwa bihinduka; nta kiguzi cy'ubuyobozi keretse cyashyizwemo."
+  national_rule_note: "Iki ni igice cy'aha hantu mu kwagura ku rwego rw'igihugu: ingo zishyirwa ku rutonde mu Rwanda rwose, si muri aka karere gusa."
+  per_household: Ku rugo ku kwezi
+  row:
+    basket: Ikiguzi cy'ibyo urugo rugura
+    extra: Ikiguzi cy'inyongera giturutse ku ihinduka ry'ibiciro
+    support: Ubufasha bwakiriwe
+    not_offset: Ikiguzi cy'inyongera kitishyurwa n'ubufasha
+  col:
+    reference: Uyu munsi
+    shock: Ihinduka ry'ibiciro gusa
+    shock_support: Ihinduka ry'ibiciro + ubufasha
+  cash_prices: Ubufasha bw'amafaranga ntibugabanya ibiciro ku isoko, bityo ikiguzi cy'ibyo urugo rugura ni kimwe hari cyangwa hatari ubufasha.
+  surplus: "Ugereranyije, ubufasha burenze ikiguzi cy'inyongera ku {amount} ku rugo ku kwezi."
+  average_note: Izi ni impuzandengo z'itsinda; ingo zimwe zishobora kuguma zibura amafaranga n'iyo impuzandengo yishyuwe.
+  reach:
+    households: Ingo nshya zagezweho
+    people: Abantu bashya bagezweho
+    people_sub: "Abantu {n}"
+    existing: "Nta bagenerwabikorwa bashya; ingo {n} zisanzwe zihabwa byinshi"
+    poor: Abagenerwabikorwa bari munsi y'umurongo w'ubukene muri 2023/24
+    poor_sub: "{share} by'ingo z'abagenerwabikorwa (ubushakashatsi)"
+  cost:
+    transfers: Amafaranga y'inyongera atanzwe
+    transfers_sub: "Ingo {hh} × {amount} × inshuro {payments}"
+    delivery: Ikiguzi cyo kugeza ubufasha
+    total: Ikiguzi cyose cy'inyongera
+    total_sub: "Harimo {delivery} yo kugeza ubufasha"
+    no_delivery: Ikiguzi cyo kugeza ubufasha nticyashyizwemo
+  download: Kuramo ibisubizo (CSV)
+  filename: "baho-neza-ubufasha-{place}-{area}.csv"
+  not_estimated_title: Ibitagereranywa
+  not_estimated: |
+    - Ihinduka ry'ubukene: amafaranga atanzwe ntiyongerwa ku ikoreshwa ngo ubukene bwongere bupimwe, kuko umurongo w'ubukene, ibiciro bishingirwaho n'uko ingo zakoresha amafaranga bitaremezwa.
+    - Ingaruka zitewe na gahunda: amanota ya moderi ashyira ingo ku rutonde; kuyahindura ntibyerekana icyo politiki itera.
+    - Ubufasha buhuriweho: ibihurirwaho hagati ya gahunda ntibibarwa, bityo ntibutangwa.
+  disclaimer: "Igereranya ryo gutegura. Si icyizere gihamye. Ntirikoreshwa guhitamo cyangwa guheza urugo runaka."
+
+action:
+  cash:
+    name: Inkunga nshya y'amafaranga
+    help: Amafaranga ahabwa itsinda ry'igenamigambi uhitamo, ku mubare ushyiraho.
+  ds_expansion:
+    name: Kwagura Inkunga y'ingoboka ya VUP
+    help: Hakoreshwa igerageza ryemejwe ryo kwagura. Ingo nshya zituruka mu zitabona ubufasha bwa VUP.
+  nsds_increase:
+    name: Kongera amafaranga ya NSDS
+    help: Byongera amafaranga y'ingo zisanzwe zihabwa NSDS. Kongera amafaranga gusa ntibyongera abagenerwabikorwa.
+  public_works:
+    name: Imirimo y'amaboko ihemberwa
+    why: Imishahara yose yabarwa, ariko inyungu y'inyongera ukuyemo indi mirimo abantu bari gukora ntizwi.
+  school_costs:
+    name: Ubufasha ku bisabwa ku ishuri
+    why: Amabwiriza ya gahunda (ibisabwa ibihe, abanyeshuri abahe) ntasobanuwe, kandi abanyeshuri si ingo.
+  food_assistance:
+    name: Inkunga y'ibiribwa
+    why: Nta mabwiriza ya gahunda cyangwa agaciro k'ibiribwa bitangwa bihari.
+  livelihoods:
+    name: Amahugurwa, ubuhinzi cyangwa ubucuruzi
+    why: Nta bimenyetso biri mu makuru ku nyungu z'izi gahunda.
+  combined:
+    name: Ubufasha buhuriweho
+    why: Ibihurirwaho hagati ya gahunda ntibibarwa, bityo abagenerwabikorwa bashobora kubarwa kabiri.
+
+rule:
+  poverty_top:
+    name: Amahirwe menshi yo kuba mu bukene (igereranya)
+  distress_top:
+    name: Ingorane nyinshi
+  high_need_no_vup:
+    name: Ibikenewe byinshi nta bufasha bwa VUP bwagaragaye
+
+frequency:
+  monthly: Buri kwezi
+  quarterly: Buri gihembwe
+
+how:
+  title: Uko bikora
+  question: Ibice bine, buri kimwe gifite akazi kacyo n'aho kagarukira.
+  poverty:
+    title: Moderi y'ubukene
+    body: Igereranya amahirwe y'uko urugo ruri munsi y'umurongo w'ubukene, hashingiwe ku bisubizo by'ubushakashatsi. Ikoreshwa kugereranya ahantu no gutondeka amatsinda y'igenamigambi.
+    not: "Moderi y'ubukene si icyemezo cyo kwemererwa kandi ntiyerekana icyo politiki yatera."
+  price:
+    title: Igikoresho cy'ingaruka z'ibiciro ku ngo
+    body: Kibara igiciro cy'ibyo buri rugo rugura hakoreshejwe CPI yemewe yo mu mujyi cyangwa mu cyaro, ku cyiciro cy'ikoreshwa, hanyuma kikongeraho amazamuka ushyizemo.
+    not: "Igikoresho cy'ibiciro ntigiteganya ibiciro kandi ntikibara ingo zihindukira ku bicuruzwa bihendutse."
+  distress:
+    title: Igipimo cy'ingorane
+    body: Gihuriza hamwe ibikenewe bihurirana (izamuka ry'ibiciro, igice cy'ibiryo, ubukene, kutagira amafaranga ahoraho, kuzigama n'inguzanyo) mu rutonde rumwe. Ibikenewe byinshi ni agatanu ka mbere.
+    not: "Igipimo cy'ingorane ni uburyo bwo gutondeka; igerageza ntirigusaba kukizamura, kandi ntikibarwa bushya mu igerageza."
+  coverage:
+    title: Moderi y'uko VUP igera ku ngo
+    body: Isobanura imiterere y'ingo zifite ibikenewe byinshi VUP yagezeho muri 2023/24, itandukanyijwe n'uko byagaragaye mu by'ukuri.
+    not: "Kuba bitaganyijwe hasi ntibigaragaza ko hari uwahejwe ku buryo butemewe."
+  tech_title: Ibisobanuro bya tekiniki
+  tech:
+    holdout_title: Ubunyangamugayo bwa moderi ku itsinda ry'igenzura (ryapimwe rimwe)
+    holdout_note: "Itsinda ry'igenzura rya nyuma: ingo {n}, igice kimwe mu bice bitanu by'ubushakashatsi, ritigeze rikoreshwa mu kwigisha cyangwa kunoza moderi. Intera: bootstrap y'amatsinda."
+    measure: Igipimo
+    value: Agaciro
+    metric:
+      poverty_roc_auc: "Moderi y'ubukene: ROC-AUC"
+      poverty_pr_auc: "Moderi y'ubukene: PR-AUC"
+      poverty_precision_top20: "Moderi y'ubukene: igice cy'ingo zatoranyijwe zikennye (20% bya mbere)"
+      poverty_poor_people_reached_top20: "Moderi y'ubukene: igice cy'abakene bagezweho (20% bya mbere)"
+      poverty_calibration_slope: "Moderi y'ubukene: ihanamye rya calibration"
+      vup_roc_auc: "Moderi ya VUP: ROC-AUC"
+      vup_pr_auc: "Moderi ya VUP: PR-AUC"
+    crossfit_title: Imibare y'igerageza (cross-fitted, icyitegererezo cyose)
+    crossfit_note: "Ituruka ku manota y'ingo 15,054 zose, abazwe hanze y'itsinda ryigishije moderi, nk'uko akoreshwa mu igerageza. Itangazwa itandukanye n'ibisubizo by'itsinda ry'igenzura kandi si igenzura rya kabiri."
+    units_title: Ingo n'abantu
+    units: "Ubusobanuro (precision) bubara ingo (zingahe mu zatoranyijwe zikennye). Abakene bagezweho babara abantu (abakene bangahe baba mu ngo zatoranyijwe). Ibi byombi ntibisimburana."
+    calibration_title: Calibration
+    calibration: "Moderi y'ubukene ihuzwa n'amatsinda kugira ngo impuzandengo z'iteganya zihure n'ubukene bwagaragaye ku ntara, agace, ubumuga n'andi matsinda. Ibi bikosora impuzandengo gusa; amakosa ari imbere mu matsinda arasigara."
+    fairness_title: Aho ubutabera bugarukira
+    fairness: |
+      - Hakoreshejwe umurongo umwe ku rwego rw'igihugu, ingo nto, Kigali n'abayobozi b'ingo bakiri bato bagerwaho gake cyane (19–54% by'abakene babo, ugereranyije na 66% muri rusange).
+      - Calibration ntibihindura; politiki itandukanye yo gutoranya ni yo yabihindura.
+      - Ibisubizo bya moderi ya VUP ku matsinda ntibisobanutse neza (abagenerwabikorwa bake mu cyitegererezo).
+    sources_title: Inkomoko z'amakuru
+    sources: |
+      - Ubushakashatsi ku mibereho y'ingo EICV7 bwa NISR, 2023/24: ingo 15,054.
+      - Igipimo cy'ibiciro ku baguzi cya NISR, umujyi n'icyaro, Mutarama 2024 kugeza {latest}.
+      - Imbibi z'uturere: geoBoundaries (CC BY 4.0).
+    survey_age_title: Igihe ubushakashatsi bumaze
+    survey_age: "Ingo zabajijwe hagati ya Ukwakira 2023 na Ukwakira 2024. Ibiciro byavuguruwe kugeza {latest}, ariko ingo, amafaranga zinjiza n'abari muri gahunda ntibyavuguruwe."
+    cpi_title: Uko ibiciro bihuzwa
+    cpi: "Buri gice mu bice 25 by'ikoreshwa ry'amafaranga kibarwa hakoreshejwe igipimo kimwe cyemewe cya NISR cy'agace urugo rurimo (umujyi cyangwa icyaro). Aho ibipimo by'icyaro bitabaho, hakoreshwa igipimo cy'icyaro cyegereye. Uturere nta bipimo by'ibiciro byihariye dufite."
+    scenarios_title: Ibyo igerageza rifata nk'ukuri
+    scenarios: |
+      - Amazamuka y'igerageza yongerwa ku biciro bya {latest}; ihinduka ryagaragaye kuva Mutarama 2024 ribarwa rimwe gusa.
+      - Amafaranga yinjizwa ntahinduka mu mafaranga.
+      - Ingo ntizihindukira ku bicuruzwa bihendutse.
+      - Abagenerwabikorwa ni ingo uko zabajijwe; nta winjira cyangwa usohoka.
+    ai_title: Ikoreshwa rya AI
+    ai: "Ibice bya kode n'inyandiko byateguwe hifashishijwe AI kandi bisuzumwa n'itsinda. Inyandiko y'Ikinyarwanda yateguwe n'imashini kandi iracyakeneye gusuzumwa n'umuntu uvuga Ikinyarwanda kavukire."
+  disclaimer: Igereranya ryo gutegura. Ntirikoreshwa guhitamo abagenerwabikorwa mu buryo bwikora.
+
+data:
+  title: Amakuru n'aho agarukira
+  question: Icyo imibare ari cyo, n'icyo atari cyo.
+  kinds_title: Ubwoko butatu bw'imibare
+  kind:
+    survey: Yapimwe mu bushakashatsi EICV7 cyangwa mu biciro byemewe, ifite kudashidikanya k'ubushakashatsi.
+    model: Yateganyijwe na moderi y'imibare hashingiwe ku bisubizo by'ubushakashatsi. Ifasha kugereranya, si gufata icyemezo ku rugo.
+    scenario: Ibarwa hashingiwe ku byo wowe ufata nk'ukuri. Yerekana icyashoboka iyo ibyo bifashwe bibaye ukuri.
+  not_register: "Ubushakashatsi busobanura ingo uko zari ziri muri 2023/24. Si urutonde ruhora ruvugururwa, kandi imibare yavuguruwe hakurikijwe ibiciro si ubukene bugaragara uyu munsi."
+  privacy_title: Uko amatsinda mato arindwa
+  privacy: |
+    - Hatangazwa imibare ihurijwe hamwe gusa; porogaramu ntijya ifungura amakuru y'urugo.
+    - Imibare ishingiye ku ngo ziri munsi ya {n} zabajijwe irahishwa.
+    - Indi mibare irahishwa aho igiteranyo ukuyemo indi mibare yatangajwe cyagaragaza iyahishwe (umujyi + icyaro, uturere mu Rwanda, amatsinda abiri).
+    - Amatsinda y'igenamigambi ari muri mugenzi wayo (10%, 20%, 30% bya mbere) arahishwa iyo itandukaniro ryayo ryagaragaza ingo ziri munsi ya {n} zabajijwe.
+    - Aya mabwiriza ntarasuzumwa cyangwa ngo yemezwe na NISR.
+  supported_title: Igerageza rishyigikiwe
+  unsupported_title: Ibidashyigikiwe
+  no_poverty_change: "Ubukene nyuma y'ubufasha: ntibugereranywa (nta ivugurura ryemejwe ry'umurongo w'ubukene cyangwa uko ikoreshwa ryahinduka)."
+  translation_title: Uko ubusobanuro buhagaze
+  translation: "Inyandiko y'Ikinyarwanda yateguwe n'imashini kandi ntirasuzumwa n'umuntu uvuga Ikinyarwanda kavukire. Mutumenyeshe amagambo atumvikana."
+  samples_title: Ingo zabajijwe muri buri karere
+  hidden_cell: Byahishwe
+  samples_note: "Umubare w'ingo zabajijwe zishingirwaho na buri mubare. 'Byahishwe' bivuze munsi ya {n}, cyangwa byahishwe kugira ngo hirindwe undi mubare."
+  disclaimer: Ibi ni igereranya ryo gutegura. Amabwiriza yemewe yo guhitamo abagenerwabikorwa n'igenzura biracyakurikizwa.
+
+# explain.*: machine-drafted Kinyarwanda, NOT yet reviewed by a fluent speaker.
+explain:
+  title: Mu magambo yoroshye
+  button: Sobanura mu buryo bworoshye
+  loading: Turimo kwandika ibisobanuro byoroshye…
+  ai_label: Ibisobanuro byafashijwemo na AI
+  ai_note: "Byanditswe hifashishijwe AI hashingiwe ku bisubizo byemejwe biri hejuru. Baho Neza ni yo ishyiramo buri mubare; amakarita y'ibisubizo ni yo mibare nyakuri. Suzuma amagambo mbere yo kubisangiza."
+  not_configured: Ibisobanuro bya AI ntibyashyizweho.
+  needs_results: Banza werekane ibisubizo byemewe kugira ngo ubone ibisobanuro.
+  fallback: Incamake yoroshye iri hejuru iracyari ukuri.
+  error:
+    timeout: Ibisobanuro bya AI byatinze cyane.
+    quota: Serivisi ya AI irahuze cyangwa umubare w'ubuntu wageze ku iherezo. Ongera ugerageze nyuma.
+    provider: Serivisi ya AI ntiboneka ubu.
+    invalid: Ibisobanuro bya AI ntibyatsinze igenzura rya Baho Neza, bityo ntibigaragazwa.
+    cooldown: Tegereza amasegonda make mbere yo gusaba ibindi bisobanuro.
+    limit: Wageze ku mubare w'ibisobanuro bya AI byemewe muri iki gihe ukoresha porogaramu.
+    inflight: Ibisobanuro biracyandikwa.
+  section:
+    tested: Ibyo wagerageje
+    meaning: Icyo bivuze
+    example: Urugero rworoshye
+    support: Icyo ubufasha buhindura
+    limitation: Imbibi imwe y'ingenzi
+  price:
+    tested_simple: "Wagerageje ko ibiciro byose bizamuka ku {increase_all_pct} (igihe: {horizon_months}), hejuru y'ibiciro bya {baseline_month}, muri {place}. Ni izamuka ry'inyongera ry'ibiciro, si ihinduka ry'igipimo cy'izamuka ry'ibiciro ku mwaka."
+    tested_detailed: "Wagerageje amazamuka atandukanye y'ibiciro (igihe: {horizon_months}), hejuru y'ibiciro bya {baseline_month}, muri {place}: ibiryo {increase_food_pct}, ingufu n'amavuta {increase_energy_pct}, ingendo {increase_transport_pct}, ibisabwa ku ishuri {increase_education_pct} n'ibindi {increase_other_pct}. Ni amazamuka y'inyongera y'ibiciro, si ihinduka ry'igipimo cy'izamuka ry'ibiciro ku mwaka."
+    meaning: "Ibyo urugo rugura bimwe byahenda {basket_change_pct} kurushaho: hafi {extra_monthly_rwf} y'inyongera ku rugo ku kwezi, ugereranyije (uyu munsi: {reference_monthly_rwf}). Niba amafaranga yinjizwa adahindutse, amafaranga amwe agura hafi {purchasing_power_loss_pct} bike. Ku ngo zose {households} zo hano, ikiguzi cy'inyongera ni hafi {extra_monthly_total_rwf} ku kwezi."
+    example_simple: "Urugero gusa, si imibare y'akarere: urugo rukoresha {example_budget_rwf} ku kwezi kuri ibi bicuruzwa rwakenera hafi {example_extra_rwf} y'inyongera buri kwezi."
+    example_detailed: "Urugero gusa, si urugo nyarwo: urugo rufite imikoreshereze isanzwe y'aha hantu rukoresha {example_budget_rwf} ku kwezi rwakenera hafi {example_extra_rwf} y'inyongera buri kwezi. Ingo zikoresha byinshi ku byiciro bizamuka cyane zakwishyura byinshi."
+  support:
+    tested: "Gahunda wagerageje: {programme}, muri {place}. Abagenerwabikorwa: {recipient_group}. Kwishyura: {payment}. Igihe: {duration_months} (inshuro {payments} zo kwishyura). Ibiciro: {price_scenario}."
+    meaning_new: "Ingo {new_recipient_households} z'inyongera (abantu {new_recipient_people}) zahabwa ubufasha; muri izo ngo, {poor_recipient_households} zari munsi y'umurongo w'ubukene mu bushakashatsi bwa 2023/24 (byagaragaye, si iteganya). Amafaranga atangwa yatwara {direct_transfers_rwf}; hamwe n'ikiguzi cyo kuyageza cya {delivery_costs_rwf}, igiteranyo ni {total_cost_rwf}."
+    meaning_existing: "Nta ngo nshya zongerwaho: ingo {existing_recipient_households} zisanzwe zihabwa NSDS zahabwa byinshi; {poor_recipient_households} muri zo zari munsi y'umurongo w'ubukene mu bushakashatsi bwa 2023/24 (byagaragaye). Amafaranga atangwa yatwara {direct_transfers_rwf}; hamwe n'ikiguzi cyo kuyageza cya {delivery_costs_rwf}, igiteranyo ni {total_cost_rwf}."
+    changes: "Ugereranyije, buri rugo ruhabwa ubufasha ruhura n'ikiguzi cy'inyongera cya {extra_monthly_rwf} ku kwezi giturutse ku ihinduka ry'ibiciro kandi rugahabwa {support_monthly_rwf} ku kwezi, hagasigara {not_offset_monthly_rwf} ku kwezi kitishyuwe. Ubufasha ntibugabanya ibiciro ku isoko."
+    example: "Urugero (igihe: {duration_months}): urugo rumwe ruhabwa ubufasha rwahabwa {example_per_household_rwf} yose hamwe (inshuro {payments} zo kwishyura)."
+  limit:
+    not_forecast: "Iri ni igerageza, si iteganyagihe: ryerekana icyo ibyo urugo rugura bimwe byatwara iyo ibiciro bizamutse nk'uko byashyizwemo."
+    no_substitution: Rifata ko ingo zikomeza kugura ibicuruzwa bimwe; guhindukira ku bihendutse byagabanya ikiguzi cy'inyongera.
+    incomes_fixed: Rifata ko amafaranga yinjizwa adahinduka mu mafaranga.
+    survey_age: Ingo ni uko zabajijwe muri 2023/24; ubushakashatsi si urutonde ruhora ruvugururwa.
+    no_poverty_change: Ntirigereranya umubare w'abantu bava mu bukene; ribara abagerwaho n'ikiguzi.
+    averages: Imibare ni impuzandengo z'itsinda; ingo zimwe zakomeza kubura amafaranga.
+    not_eligibility: Amatsinda y'igenamigambi akoresha amahirwe yo kuba mu bukene cyangwa ingorane; si icyemezo cyo kwemererwa.
+    national_rule: "Iki ni igice cy'aha hantu mu kwagura ku rwego rw'igihugu: ingo zishyirwa ku rutonde mu Rwanda rwose."
+
+# ux.*: machine-drafted Kinyarwanda, NOT yet reviewed by a fluent speaker.
+ux:
+  prices:
+    controls_note: "Amazamuka y'inyongera hejuru y'ibiciro bya {latest}, ateranyijwe mu gihe cyose. Si igipimo cy'izamuka ry'ibiciro ku mwaka."
+    earnings_note: "Amafaranga yinjizwa afatwa nk'adahinduka."
+    chip_period: Igihe
+    chip_period_value: "amezi {months} ari imbere uhereye {latest}"
+    chip_prices: Ibiciro
+    chip_simple: "+{pct}% ku biciro byose"
+    chip_detailed: "ku byiciro (reba igishushanyo)"
+    chip_incomes: Amafaranga yinjizwa
+    chip_incomes_value: ntahinduka (icyo dufata nk'ukuri)
+    sentence: "Ibyo urugo rugura bimwe byahenda {change} kurushaho: hafi {extra} y'inyongera ku rugo ku kwezi."
+    chart_before_after: Ikiguzi cy'ibyo urugo rugura ku kwezi
+    chart_today: "Uyu munsi (ibiciro bya {latest})"
+    chart_scenario: Hamwe n'iri hinduka ry'ibiciro
+    axis_monthly: Frw ku rugo ku kwezi (impuzandengo)
+    chart_contrib: Ibyiciro byongera ikiguzi cyane
+    axis_extra: Frw y'inyongera ku rugo ku kwezi (impuzandengo)
+    details_title: "Ibisobanuro birambuye: ibyiciro n'amatsinda"
+    assumptions_title: Ibyo dufata nk'ukuri n'ibitabarirwamo
+    assumptions: |
+      - Aho bihera: ibiciro bya {latest}, ukwezi guheruka kwa CPI. Ihinduka kuva {base} ryamaze kubarirwa mu kiguzi cy'uyu munsi.
+      - Amafaranga yinjizwa n'ibindi ingo zifite ntibihinduka mu mafaranga. Guhindura amafaranga yinjizwa ntibitangwa: ubushakashatsi ntibuyapima neza bihagije.
+      - Ihinduka ry'ubukene n'ibura ry'amafaranga ntibigaragazwa: byasaba kuvugurura umurongo w'ubukene byemejwe n'uko ingo zihinduka.
+      - Ingo zihindukira ku bihendutse, inyungu z'abahinzi bagurisha ibiribwa n'ingaruka zagutse ku mirimo n'ubucuruzi ntibibarirwamo.
+  compare:
+    chip_programme: Gahunda
+    chip_payment: Kwishyura
+    chip_duration: Igihe
+    chip_duration_value: "amezi {months} (inshuro {payments} zo kwishyura)"
+    chip_prices: Ibiciro
+    kpi_new: Ingo z'inyongera zifashwa
+    kpi_new_sub: "{poor} muri zo zari munsi y'umurongo w'ubukene muri 2023/24 (ubushakashatsi)"
+    kpi_existing: Abasanzwe bahabwa bahabwa byinshi
+    kpi_existing_sub: "Nta bagenerwabikorwa bashya · {poor} bari munsi y'umurongo w'ubukene muri 2023/24 (ubushakashatsi)"
+    kpi_people: Abantu baba muri izi ngo
+    kpi_people_sub_new: Abantu baba mu ngo z'inyongera
+    kpi_people_sub_existing: Abantu baba mu ngo zisanzwe zihabwa NSDS
+    kpi_cost: Ikiguzi cyose cy'inyongera
+    kpi_cost_sub: "Mu mezi {months}: amafaranga atangwa {transfers} + kuyageza {delivery}"
+    kpi_cost_sub_none: "Mu mezi {months}: amafaranga atangwa gusa (ikiguzi cyo kuyageza nticyashyizwemo)"
+    kpi_remaining: Ikiguzi cy'inyongera kitarishyurwa
+    kpi_remaining_sub: Impuzandengo ku rugo ruhabwa ubufasha ku kwezi
+    kpi_remaining_surplus_sub: "Ubufasha burenze ikiguzi cy'inyongera ku {surplus} ku kwezi, ugereranyije"
+    sentence_new: "Ingo {households} z'inyongera zahabwa {support} ku kwezi ugereranyije; {remaining} by'ikiguzi cy'inyongera ku rugo bisigara bitishyuwe."
+    sentence_existing: "Ingo {households} zisanzwe zihabwa NSDS zahabwa {support} y'inyongera ku kwezi ugereranyije; {remaining} by'ikiguzi cy'inyongera ku rugo bisigara bitishyuwe."
+    sentence_new_surplus: "Ingo {households} z'inyongera zahabwa {support} ku kwezi ugereranyije, birenze ikiguzi cy'inyongera ku {surplus}."
+    sentence_existing_surplus: "Ingo {households} zisanzwe zihabwa NSDS zahabwa {support} y'inyongera ku kwezi ugereranyije, birenze ikiguzi cy'inyongera ku {surplus}."
+    chart_offset: Ikiguzi cy'inyongera n'ubufasha (ku rugo ruhabwa ubufasha ku kwezi)
+    bar_extra: Ikiguzi cy'inyongera giturutse ku biciro
+    bar_support: Ubufasha bwakiriwe
+    bar_remaining: Ibitarishyurwa
+    bar_surplus: Ubufasha burenze ikiguzi cy'inyongera
+    axis_offset: Frw ku rugo ruhabwa ubufasha ku kwezi (impuzandengo)
+    table_title: "Uyu munsi · ihinduka ry'ibiciro gusa · ihinduka ry'ibiciro + ubufasha"
+    notes: "Ni impuzandengo z'itsinda; ingo zimwe zishobora gukomeza kubura amafaranga. Ubufasha bw'amafaranga ntibugabanya ibiciro ku isoko. Amafaranga arenze si igipimo cyo kugabanuka k'ubukene."
+    assumptions_title: Ibyo dufata nk'ukuri n'ibitagereranywa
+  community:
+    groups_chart: Abantu bari munsi y'umurongo w'ubukene, ku itsinda
+    groups_axis: "% by'abantu (ubushakashatsi 2023/24)"
+    groups_table: Imbonerahamwe y'amatsinda (ibipimo byose)
+    indicator_about: Ibyerekeye iki gipimo
