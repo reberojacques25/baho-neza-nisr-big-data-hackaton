@@ -30,6 +30,8 @@ CSS = f"""
 <style>
 .block-container {{max-width: 1600px; padding: 24px 32px 40px;}}
 @media (max-width: 640px) {{ .block-container {{padding: 16px 16px 32px;}} }}
+/* Clear Streamlit's top toolbar (3.75rem; opaque on Community Cloud) so the brand row is never hidden under it */
+.block-container {{padding-top: calc(3.75rem + 16px);}}
 .bn-prose, .bn-note, .bn-result {{max-width: 900px;}}
 [data-testid="stPageLink"] p {{white-space: nowrap;}}
 [class*="st-key-cta_"] button {{min-height: 44px;}}
