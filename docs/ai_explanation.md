@@ -65,7 +65,7 @@ Google's [Gemini API Additional Terms of Service](https://ai.google.dev/gemini-a
 
 ## 4. Outbound data contract (exactly what may be sent)
 
-**When something is sent.** Only after a user clicks **Explain simply** on a **valid** result, and only when the configuration is complete and approved. One request goes to `generate_content`. It contains:
+**When something is sent.** Only when a user asks for results (**Show results** or **Compare**) or clicks **Explain simply**, for a **valid** result, and only when the configuration is complete and approved. One request goes to `generate_content`. It contains:
 - **`system_instruction`:** the fixed rules in `explain.SYSTEM_INSTRUCTION`, with the language name filled in.
 - **`contents`:** a JSON payload with exactly these keys (enforced in `explain.build_payload` and tested).
 
@@ -125,7 +125,7 @@ These checks reduce the risk of wrong or misleading wording but **do not guarant
 ## 6. State, limits and failure behaviour
 
 **Calls.**
-- There are no automatic calls on page load, slider changes or reruns. The provider is called only on a button click, and the button is disabled when configuration, approval or a valid result is missing.
+- There are no calls on page load, slider changes or reruns. The provider is called once when the user asks for results (Show results or Compare), or when they click **Explain simply**, and the button is disabled when configuration, approval or a valid result is missing.
 
 **State.**
 - Each explanation is stored in **session state only**, keyed by `(page, result fingerprint, language)`.
@@ -172,7 +172,7 @@ These checks reduce the risk of wrong or misleading wording but **do not guarant
    enabled = false
    provider = "gemini"
    api_key = "<your key>"
-   model = "gemini-3.8-flash"
+   model = "gemini-3.8-flash"   # optional: this verified model is the default when omitted
    external_data_approved = false
    ```
 

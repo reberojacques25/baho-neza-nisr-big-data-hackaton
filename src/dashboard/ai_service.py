@@ -1,8 +1,10 @@
 """Optional Gemini service for Baho Neza's "Explain simply" button (docs/ai_explanation.md).
 
 Off unless .streamlit/secrets.toml (or Streamlit Community Cloud's Secrets settings) has, under [ai]:
-enabled = true, provider = "gemini", a real api_key and model (no "REPLACE_WITH" placeholders) and
-external_data_approved = true. Otherwise the app shows its deterministic explanation only.
+enabled = true, provider = "gemini", a real api_key (no "REPLACE_WITH" placeholder) and external_data_approved = true.
+`model` is optional: missing or placeholder values use DEFAULT_MODEL (verified free-tier model, docs/ai_explanation.md).
+Otherwise the app shows its deterministic explanation only. When ready, an explanation is generated once when the user
+asks for results (Show results / Compare) or clicks "Explain simply"; never on page load, slider changes or reruns.
 
 The key is read server-side through st.secrets and never displayed, logged or sent anywhere except to the provider.
 Prompts and responses are never logged; only short error codes are. Requests are bounded (timeout, one retry for
@@ -23,13 +25,14 @@ from src.dashboard import explain as ex
 log = logging.getLogger(__name__)
 
 PLACEHOLDER_PREFIX = "REPLACE_WITH"
+DEFAULT_MODEL = "gemini-3.8-flash"     # stable, free tier, structured output (verified 2026-10-30)
 MODEL_ID = re.compile(r"^[a-z0-9][a-z0-9.\-]{2,63}$")
 TIMEOUT_MS = 25_000
 MAX_ATTEMPTS = 2                    # the original request plus at most one retry, for transient errors only
 RETRY_DELAY_S = 1.5
 TRANSIENT_STATUS = {500, 502, 503, 504}
 MAX_OUTPUT_TOKENS = 2_048           # includes the model's internal "thinking" tokens
-COOLDOWN_S = 20.0
+COOLDOWN_S = 10.0
 MAX_REQUESTS_PER_SESSION = 8
 INFLIGHT_EXPIRY_S = TIMEOUT_MS / 1000 * MAX_ATTEMPTS + 10
 
@@ -67,14 +70,15 @@ def config_status(raw: Mapping | None) -> tuple[str, AIConfig | None]:
         return "not_configured", None
     if raw.get("enabled") is not True:
         return "disabled", None
-    if raw.get("provider") != "gemini" or not _real(raw.get("api_key")) or not _real(raw.get("model")):
+    if raw.get("provider", "gemini") != "gemini" or not _real(raw.get("api_key")):
         return "not_configured", None
-    if not MODEL_ID.match(raw["model"].strip()):
+    model = raw["model"].strip() if _real(raw.get("model")) else DEFAULT_MODEL
+    if not MODEL_ID.match(model):
         return "not_configured", None
     if raw.get("external_data_approved") is not True:
         return "not_approved", None
     level = raw.get("thinking_level", "low")
-    return "ready", AIConfig("gemini", raw["model"].strip(), raw["api_key"].strip(), level if isinstance(level, str) else "low")
+    return "ready", AIConfig("gemini", model, raw["api_key"].strip(), level if isinstance(level, str) else "low")
 
 
 def load_config() -> tuple[str, AIConfig | None]:

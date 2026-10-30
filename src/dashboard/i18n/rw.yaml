@@ -560,6 +560,7 @@ data:
 
 # explain.*: machine-drafted Kinyarwanda, NOT yet reviewed by a fluent speaker.
 explain:
+  ai_title: Ibisobanuro bya AI by'ibi bisubizo
   title: Mu magambo yoroshye
   button: Sobanura mu buryo bworoshye
   loading: Turimo kwandika ibisobanuro byoroshye…
@@ -586,8 +587,8 @@ explain:
     tested_simple: "Wagerageje ko ibiciro byose bizamuka ku {increase_all_pct} (igihe: {horizon_months}), hejuru y'ibiciro bya {baseline_month}, muri {place}. Ni izamuka ry'inyongera ry'ibiciro, si ihinduka ry'igipimo cy'izamuka ry'ibiciro ku mwaka."
     tested_detailed: "Wagerageje amazamuka atandukanye y'ibiciro (igihe: {horizon_months}), hejuru y'ibiciro bya {baseline_month}, muri {place}: ibiryo {increase_food_pct}, ingufu n'amavuta {increase_energy_pct}, ingendo {increase_transport_pct}, ibisabwa ku ishuri {increase_education_pct} n'ibindi {increase_other_pct}. Ni amazamuka y'inyongera y'ibiciro, si ihinduka ry'igipimo cy'izamuka ry'ibiciro ku mwaka."
     meaning: "Ibyo urugo rugura bimwe byahenda {basket_change_pct} kurushaho: hafi {extra_monthly_rwf} y'inyongera ku rugo ku kwezi, ugereranyije (uyu munsi: {reference_monthly_rwf}). Niba amafaranga yinjizwa adahindutse, amafaranga amwe agura hafi {purchasing_power_loss_pct} bike. Ku ngo zose {households} zo hano, ikiguzi cy'inyongera ni hafi {extra_monthly_total_rwf} ku kwezi."
-    example_simple: "Urugero gusa, si imibare y'akarere: urugo rukoresha {example_budget_rwf} ku kwezi kuri ibi bicuruzwa rwakenera hafi {example_extra_rwf} y'inyongera buri kwezi."
-    example_detailed: "Urugero gusa, si urugo nyarwo: urugo rufite imikoreshereze isanzwe y'aha hantu rukoresha {example_budget_rwf} ku kwezi rwakenera hafi {example_extra_rwf} y'inyongera buri kwezi. Ingo zikoresha byinshi ku byiciro bizamuka cyane zakwishyura byinshi."
+    example_simple: "Urugero, urugo rusanzwe muri {place}: ibyo rugura bitwara {example_budget_rwf} ku kwezi uyu munsi na {example_new_rwf} nyuma y'ihinduka ry'ibiciro, ni ukuvuga {example_extra_rwf} y'inyongera buri kwezi."
+    example_detailed: "Urugero, urugo rusanzwe muri {place}: ibyo rugura bitwara {example_budget_rwf} ku kwezi uyu munsi na {example_new_rwf} nyuma y'aya mahinduka y'ibiciro, ni ukuvuga {example_extra_rwf} y'inyongera buri kwezi. Ingo zikoresha byinshi ku byiciro bizamuka cyane zakwishyura byinshi."
   support:
     tested: "Gahunda wagerageje: {programme}, muri {place}. Abagenerwabikorwa: {recipient_group}. Kwishyura: {payment}. Igihe: {duration_months} (inshuro {payments} zo kwishyura). Ibiciro: {price_scenario}."
     meaning_new: "Ingo {new_recipient_households} z'inyongera (abantu {new_recipient_people}) zahabwa ubufasha; muri izo ngo, {poor_recipient_households} zari munsi y'umurongo w'ubukene mu bushakashatsi bwa 2023/24 (byagaragaye, si iteganya). Amafaranga atangwa yatwara {direct_transfers_rwf}; hamwe n'ikiguzi cyo kuyageza cya {delivery_costs_rwf}, igiteranyo ni {total_cost_rwf}."

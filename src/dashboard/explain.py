@@ -23,13 +23,12 @@ from src.dashboard.scenario import CATEGORIES
 
 KINDS = ("price", "compare")
 SECTIONS = ("tested", "meaning", "example", "support", "limitation")
-EXAMPLE_BUDGET_RWF = 100_000          # illustrative monthly spending on the basket; not an observed statistic
 PRICE_LIMITATIONS = ("not_forecast", "no_substitution", "incomes_fixed", "survey_age")
 COMPARE_LIMITATIONS = ("no_poverty_change", "averages", "survey_age", "not_eligibility", "national_rule")
 PRICE_FACTS = ("place", "baseline_month", "horizon_months", "increase_all_pct",
                *(f"increase_{c}_pct" for c in CATEGORIES), "basket_change_pct", "reference_monthly_rwf",
                "extra_monthly_rwf", "purchasing_power_loss_pct", "households", "extra_monthly_total_rwf",
-               "example_budget_rwf", "example_extra_rwf")
+               "example_budget_rwf", "example_new_rwf", "example_extra_rwf")
 COMPARE_FACTS = ("place", "programme", "recipient_group", "payment", "price_scenario", "duration_months", "payments",
                  "new_recipient_households", "new_recipient_people", "existing_recipient_households",
                  "poor_recipient_households", "extra_monthly_rwf", "support_monthly_rwf", "not_offset_monthly_rwf",
@@ -92,10 +91,13 @@ def price_facts(result: dict, meta: dict, lang: str) -> dict[str, Fact]:
         "households": Fact(_num(result["households"]), "households", "households in this place (survey estimate)", ""),
         "extra_monthly_total_rwf": Fact(_num(result["extra_monthly_total"]), "rwf_per_month_all_households",
                                         "extra cost for all households in this place, per month", ""),
-        "example_budget_rwf": Fact(EXAMPLE_BUDGET_RWF, "rwf_per_household_per_month",
-                                   "ILLUSTRATIVE monthly spending on the basket (not an observed statistic)", ""),
-        "example_extra_rwf": Fact(round(EXAMPLE_BUDGET_RWF * change / 100), "rwf_per_household_per_month",
-                                  "ILLUSTRATIVE extra monthly cost for that spending (computed by Baho Neza)", ""),
+        # The example is the result itself, told for the average household in this place (not a made-up budget)
+        "example_budget_rwf": Fact(_num(result["reference_monthly"]), "rwf_per_household_per_month",
+                                   "EXAMPLE: average household in this place, monthly basket cost today (from the result)", ""),
+        "example_new_rwf": Fact(_num(result["scenario_monthly"]), "rwf_per_household_per_month",
+                                "EXAMPLE: the same household's monthly basket cost after the price change (from the result)", ""),
+        "example_extra_rwf": Fact(_num(result["extra_monthly"]), "rwf_per_household_per_month",
+                                  "EXAMPLE: how much more that household pays each month (from the result)", ""),
     })
     return _with_display(f, lang)
 
@@ -135,7 +137,7 @@ def compare_facts(result: dict, meta: dict, lang: str, price_label: str) -> dict
         "delivery_costs_rwf": Fact(_num(result["delivery_costs"]), "rwf_total", "delivery costs over the period (0 if not specified)", ""),
         "total_cost_rwf": Fact(_num(result["total_cost"]), "rwf_total", "total cost including delivery costs", ""),
         "example_per_household_rwf": Fact(_num(result["amount_per_payment"]) * int(result["payments"]), "rwf_total",
-                                          "ILLUSTRATIVE total received by one recipient household over the period (computed by Baho Neza)", ""),
+                                          "EXAMPLE: total one recipient household receives over the period (from the result)", ""),
     }
     if existing:
         f["existing_recipient_households"] = Fact(_num(result["recipient_households"]), "households",
@@ -235,8 +237,10 @@ Rules:
 - Write in {language}. Simple words, short sentences. About 100-150 words in total (Kinyarwanda may be longer).
 - Never write a digit or a number. Every number must be a placeholder [[fact_key]] using only keys in "facts".
   Do not calculate, round, compare numerically or invent any number. Do not invent facts.
-- Sections: "tested" (what was tested), "meaning" (what the results mean), "example" (one simple example using
-  the example_* facts, clearly called an illustration, not a real household or district statistic), "support"
+- Explain THESE results only: the scenario in "facts" and its numbers. Do not explain other scenarios, general
+  economics or examples that are not in "facts".
+- Sections: "tested" (what was tested), "meaning" (what the results mean), "example" (one concrete example for an
+  average household in this place, built only from the example_* facts, which come from this result), "support"
   (what the support changes; only if support_section_required is true, otherwise null), "limitation" (one important
   limitation, chosen from "limitations"; set limitation_id to its key).
 - Keep these distinctions: a price increase over the period is NOT a change in the inflation rate; percent is not

@@ -33,6 +33,7 @@ fp = ui.price_fingerprint(spec, geo, area)
 if st.button(t("prices.calculate"), key="cta_price_calc", type="primary", icon=":material/calculate:"):
     try:
         ui.save("saved_price", fp, sc.price_result(groups, geo, area, spec))
+        ui.request_ai_explanation("price", fp)       # AI explains these results right away, if configured
     except sc.UnsupportedScenario as e:
         ui.save("saved_price", fp, {"error": e.code})
 result, status = ui.saved("saved_price", fp)

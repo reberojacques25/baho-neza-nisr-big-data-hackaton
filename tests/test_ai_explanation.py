@@ -112,7 +112,8 @@ def api_error(code: int):
     ({**READY, "enabled": False}, "disabled"),
     ({**READY, "enabled": "true"}, "disabled"),                       # strings are not booleans
     ({**READY, "api_key": "REPLACE_WITH_YOUR_GEMINI_API_KEY"}, "not_configured"),
-    ({**READY, "model": "REPLACE_WITH_VERIFIED_FREE_TIER_MODEL_ID"}, "not_configured"),
+    ({**READY, "model": "REPLACE_WITH_VERIFIED_FREE_TIER_MODEL_ID"}, "ready"),       # falls back to DEFAULT_MODEL
+    ({k: v for k, v in READY.items() if k != "model"}, "ready"),
     ({**READY, "api_key": " "}, "not_configured"),
     ({**READY, "provider": "openai"}, "not_configured"),
     ({**READY, "model": "gemini model; rm -rf"}, "not_configured"),
@@ -123,6 +124,12 @@ def api_error(code: int):
 def test_config_status(raw, status):
     got, cfg = ai.config_status(raw)
     assert got == status and (cfg is not None) == (status == "ready")
+
+
+def test_missing_model_uses_the_verified_default():
+    _, cfg = ai.config_status({**READY, "model": "REPLACE_WITH_VERIFIED_FREE_TIER_MODEL_ID"})
+    assert cfg.model == ai.DEFAULT_MODEL == "gemini-3.8-flash"
+    assert ai.config_status(READY)[1].model == "gemini-test-model"
 
 
 def test_config_never_exposes_the_key():
@@ -162,14 +169,17 @@ def test_no_api_key_like_strings_in_tracked_text():
 @needs_tables
 def test_price_example_arithmetic_is_python_computed(tabs, price_simple, price_detailed):
     f = _facts("price", price_simple, tabs)
-    assert f["example_budget_rwf"].value == ex.EXAMPLE_BUDGET_RWF
-    assert f["example_extra_rwf"].value == round(ex.EXAMPLE_BUDGET_RWF * price_simple["basket_change_pct"] / 100) == 12_000
+    # The example is the result itself, for the average household in this place (not a made-up budget)
+    assert f["example_budget_rwf"].value == pytest.approx(price_simple["reference_monthly"])
+    assert f["example_new_rwf"].value == pytest.approx(price_simple["scenario_monthly"])
+    assert f["example_extra_rwf"].value == pytest.approx(price_simple["extra_monthly"])
+    assert f["example_new_rwf"].value - f["example_budget_rwf"].value == pytest.approx(f["example_extra_rwf"].value)
     assert f["increase_all_pct"].display == "12.0%" and f["horizon_months"].display == "6 months"
     assert f["baseline_month"].display == "September 2026" and f["place"].display == "Rutsiro · All areas"
     assert f["purchasing_power_loss_pct"].value == pytest.approx(-price_simple["purchasing_power_change_pct"])
     d = _facts("price", price_detailed, tabs)
     assert "increase_all_pct" not in d and d["increase_food_pct"].value == 20 and d["increase_transport_pct"].value == 0
-    assert d["example_extra_rwf"].value == round(ex.EXAMPLE_BUDGET_RWF * price_detailed["basket_change_pct"] / 100)
+    assert d["example_extra_rwf"].value == pytest.approx(price_detailed["extra_monthly"])
 
 
 @needs_tables
@@ -197,7 +207,7 @@ def test_deterministic_explanations_in_both_languages(tabs, price_detailed, cash
         assert "{" not in text and "[[" not in text
         assert facts["place"].display in text
     en = ex.deterministic_sections("price", price_detailed, _facts("price", price_detailed, tabs), "en")
-    assert "not changes in the yearly inflation rate" in en["tested"] and "not a real household" in en["example"]
+    assert "not changes in the yearly inflation rate" in en["tested"] and "the average household in" in en["example"]
     nsds_en = ex.deterministic_sections("compare", nsds, _facts("compare", nsds, tabs), "en")
     assert "No additional households" in nsds_en["meaning"]
 
@@ -413,23 +423,25 @@ def test_button_disabled_and_generic_message_when_not_ready(secrets, mock_provid
 def test_ai_explanation_is_bound_to_the_valid_result(mock_provider):
     at = _app("views/prices.py", READY)
     at.slider(key="price_all").set_value(12.0).run()
-    at.button(key="cta_price_calc").click().run()
-    at.run()                                                              # ordinary reruns never call the provider
-    assert not mock_provider.models.calls and not at.button(key="cta_explain_price").disabled
-    at.button(key="cta_explain_price").click().run()
+    at.run()                                                              # page load, slider and reruns: no calls
+    assert not mock_provider.models.calls
+    assert not at.button(key="cta_explain_price_off").disabled is False   # no result yet: button shown, disabled
+    at.button(key="cta_price_calc").click().run()                         # results requested: AI explains them once
     assert len(mock_provider.models.calls) == 1
     label = translate("explain.ai_label", "en")
     assert label in _texts(at) and at.button(key="cta_explain_price").disabled      # no duplicate request
+    sent = json.loads(mock_provider.models.calls[0]["contents"])
+    assert sent["facts"]["increase_all_pct"]["display"] == "12.0%"        # it explains THESE results
     cards_before = [m.value for m in at.markdown if m.value.startswith('<div class="bn-card">')]
     at.run()
     assert label in _texts(at) and len(mock_provider.models.calls) == 1
     at.slider(key="price_all").set_value(20.0).run()                      # inputs changed: result and explanation stale
     assert label not in _texts(at) and translate("state.stale_price", "en") in _texts(at)
     at.button(key="cta_price_calc").click().run()                         # new result: old AI text never reappears
-    assert label not in _texts(at) and len(mock_provider.models.calls) == 1
-    at.slider(key="price_all").set_value(12.0).run()
+    assert label not in _texts(at) and len(mock_provider.models.calls) == 1          # cooldown blocks a burst
+    at.slider(key="price_all").set_value(12.0)
     at.button(key="cta_price_calc").click().run()                         # back to the explained settings
-    assert label in _texts(at)
+    assert label in _texts(at) and len(mock_provider.models.calls) == 1   # stored explanation reused, no new call
     assert [m.value for m in at.markdown if m.value.startswith('<div class="bn-card">')] == cards_before
     at.selectbox(key="lang").set_value("rw").run()                        # language: new explanation key, same numbers
     assert translate("explain.ai_label", "rw") not in _texts(at)
@@ -441,8 +453,7 @@ def test_ai_explanation_is_bound_to_the_valid_result(mock_provider):
 def test_provider_failure_shows_fallback_in_app(monkeypatch):
     monkeypatch.setattr(ai, "make_client", lambda cfg: fake_client(api_error(429)))
     at = _app("views/compare.py", READY)
-    at.button(key="cta_compare").click().run()
-    at.button(key="cta_explain_compare").click().run()
+    at.button(key="cta_compare").click().run()                           # the results click triggers the request
     assert not at.exception
     text = _texts(at)
     assert translate("explain.error.quota", "en") in text and translate("explain.fallback", "en") in text

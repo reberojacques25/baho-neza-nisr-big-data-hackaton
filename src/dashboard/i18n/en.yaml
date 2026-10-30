@@ -559,6 +559,7 @@ data:
   disclaimer: Planning estimates. Official eligibility and verification still apply.
 
 explain:
+  ai_title: AI explanation of these results
   title: In plain words
   button: Explain simply
   loading: Writing a simple explanation…
@@ -585,8 +586,8 @@ explain:
     tested_simple: "You tested all prices rising by {increase_all_pct} over the next {horizon_months}, on top of {baseline_month} prices, in {place}. This is an extra rise in prices, not a change in the yearly inflation rate."
     tested_detailed: "You tested separate price rises over the next {horizon_months}, on top of {baseline_month} prices, in {place}: food {increase_food_pct}, energy and fuel {increase_energy_pct}, transport {increase_transport_pct}, school costs {increase_education_pct} and other goods {increase_other_pct}. These are extra rises in prices, not changes in the yearly inflation rate."
     meaning: "The same basket would cost {basket_change_pct} more: about {extra_monthly_rwf} more per household per month, on average (today's basket: {reference_monthly_rwf}). If incomes stay the same, the same money buys about {purchasing_power_loss_pct} less. For all {households} households here, the extra cost is about {extra_monthly_total_rwf} per month."
-    example_simple: "Illustration, not a district statistic: a household that spends {example_budget_rwf} a month on these goods would need about {example_extra_rwf} more each month."
-    example_detailed: "Illustration, not a real household: a household with this place's average spending mix that spends {example_budget_rwf} a month would need about {example_extra_rwf} more each month. Households that spend more on the categories that rise most would pay more."
+    example_simple: "Example, the average household in {place}: the basket costs {example_budget_rwf} a month today and {example_new_rwf} after the price change, so {example_extra_rwf} more every month."
+    example_detailed: "Example, the average household in {place}: the basket costs {example_budget_rwf} a month today and {example_new_rwf} after these price changes, so {example_extra_rwf} more every month. Households that spend more on the categories that rise most would pay more."
   support:
     tested: "Programme tested: {programme}, in {place}. Recipients: {recipient_group}. Payment: {payment}. Period: {duration_months} ({payments} payments). Prices: {price_scenario}."
     meaning_new: "{new_recipient_households} additional households ({new_recipient_people} people) would receive support; {poor_recipient_households} of these households were below the poverty line in the 2023/24 survey (observed, not predicted). Transfers would cost {direct_transfers_rwf}; with delivery costs of {delivery_costs_rwf}, the total is {total_cost_rwf}."

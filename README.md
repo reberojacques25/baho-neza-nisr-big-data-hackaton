@@ -46,7 +46,7 @@ Ishingiye ku bushakashatsi **EICV7 2023/24** bwa NISR n'**Igipimo cy'ibiciro ku 
 
 **Plain-language explanations.**
 - **Always on:** every valid result on *What if prices rise?* and *Compare support* shows a deterministic "In plain words" explanation.
-- **Optional AI rewording:** an **Explain simply** button can ask Gemini to reword the verified facts. It is **off by default**, makes no automatic calls, and Baho Neza inserts every number itself.
+- **Optional AI rewording:** once configured, Gemini explains each new result as soon as you click **Show results** or **Compare**; the **Explain simply** button stays visible to retry. It is **off by default**, never calls on page load, slider moves or reruns, and Baho Neza inserts every number itself.
 - **Setup and conditions:** see [`docs/ai_explanation.md`](docs/ai_explanation.md) for setup, the outbound-data contract and the free-tier data-use conditions that must be reviewed first.
 
 ## Screenshots

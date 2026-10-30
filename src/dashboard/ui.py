@@ -340,22 +340,34 @@ def _explanation_sections(sections: dict[str, str]) -> None:
     st.markdown(body, unsafe_allow_html=True)
 
 
+def request_ai_explanation(kind: str, fp: str) -> None:
+    """Called when the user asks for results: generate the AI explanation once for this result (if configured)."""
+    st.session_state["ai_autorun"] = (kind, fp)
+
+
 def explanation_panel(kind: str, result: dict, fp: str, meta: dict, price_label: str = "") -> None:
-    """Collapsed under the visual results: the deterministic explanation of a valid result and, on click only, the
-    AI-assisted version, bound to (kind, result fingerprint, language) so it never appears under other settings."""
+    """A visible AI box under the results, then the deterministic explanation collapsed below it.
+
+    The AI explanation is bound to (kind, result fingerprint, language), so it never appears under other settings.
+    It is generated once when the user asks for results (Show results / Compare) or clicks "Explain simply";
+    never on page load, slider changes or reruns. Without configuration the button stays visible but disabled."""
     lang = current_language()
     facts = ex.build_facts(kind, result, meta, lang, price_label)
     state = st.session_state.setdefault("ai_state", {})
     key = (kind, fp, lang)
     done = state.get("done", {}).get(key)
-    with st.expander(t("explain.title"), expanded=done is not None, icon=":material/chat_info:"):
-        _explanation_sections(ex.deterministic_sections(kind, result, facts, lang))
-        status, cfg = ai.load_config()
-        clicked = st.button(t("explain.button"), key=f"cta_explain_{kind}", icon=":material/auto_awesome:",
-                            disabled=status != "ready" or done is not None)
+    autorun = st.session_state.get("ai_autorun") == (kind, fp)
+    if autorun:
+        st.session_state.pop("ai_autorun", None)
+    status, cfg = ai.load_config()
+    with st.container(border=True, key=f"ai_{kind}"):
+        head, action = st.columns([3, 1.2], vertical_alignment="center")
+        head.markdown(f"**✦ {t('explain.ai_title')}**")
+        clicked = action.button(t("explain.button"), key=f"cta_explain_{kind}", icon=":material/auto_awesome:",
+                                disabled=status != "ready" or done is not None, width="stretch")
         if status != "ready":
             st.caption(t("explain.not_configured"))
-        elif clicked and done is None:
+        elif done is None and (clicked or autorun):
             with st.spinner(t("explain.loading")):
                 done, err = ai.request_explanation(kind, result, facts, fp, lang, cfg, state, time.time())
             state["error"] = None if done else (key, err)
@@ -368,6 +380,8 @@ def explanation_panel(kind: str, result: dict, fp: str, meta: dict, price_label:
             st.caption(t("explain.ai_note"))
         elif error and error[0] == key:
             st.caption(f"{t(f'explain.error.{error[1]}')} {t('explain.fallback')}")
+    with st.expander(t("explain.title"), icon=":material/chat_info:"):
+        _explanation_sections(ex.deterministic_sections(kind, result, facts, lang))
 
 
 def explanation_unavailable(kind: str) -> None:

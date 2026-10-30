@@ -65,6 +65,7 @@ except sc.UnsupportedScenario as e:     # keep the controls usable; never stop t
 if st.button(t("compare.run"), key="cta_compare", type="primary", icon=":material/balance:", disabled=fp is None):
     try:
         ui.save("saved_compare", fp, sc.compare(planning, geo, area, price, support))
+        ui.request_ai_explanation("compare", fp)       # AI explains these results right away, if configured
     except sc.UnsupportedScenario as e:
         ui.save("saved_compare", fp, {"error": e.code})
 result, status = ui.saved("saved_compare", fp) if fp else (None, "stale" if st.session_state.get("saved_compare") else "none")
