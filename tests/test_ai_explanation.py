@@ -97,10 +97,12 @@ def fake_client(*outcomes):
     return SimpleNamespace(models=FakeModels(outcomes))
 
 
-def api_error(code: int):
+def api_error(code: int, status: str = "MOCK", reason: str | None = None):
     from google.genai import errors
     cls = errors.ClientError if code < 500 else errors.ServerError
-    return cls(code, {"error": {"code": code, "message": "mock", "status": "MOCK"}})
+    details = [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": reason}] if reason else []
+    return cls(code, {"error": {"code": code, "message": "SECRET-PROVIDER-MESSAGE key=test-key-not-real",
+                                "status": status, "details": details}})
 
 
 # ---------------------------------------------------------------------------
@@ -319,13 +321,17 @@ def test_http_client_has_timeout_and_no_sdk_retries():
 
 @pytest.mark.parametrize("outcomes,code,calls", [
     ([api_error(429)], "quota", 1),                                          # quota: never retried
-    ([api_error(400)], "provider", 1),
-    ([api_error(403)], "provider", 1),
+    ([api_error(400)], "incompatible", 1),                                   # request format / schema / setting
+    ([api_error(404)], "incompatible", 1),                                   # unknown model
+    ([api_error(403)], "access", 1),                                         # permission
+    ([api_error(401)], "access", 1),
+    ([api_error(400, reason="API_KEY_INVALID")], "access", 1),               # invalid key arrives as 400
+    ([api_error(400, status="FAILED_PRECONDITION")], "access", 1),           # e.g. unsupported location
     ([api_error(503), api_error(503)], "provider", 2),                       # one retry only
     ([httpx.ReadTimeout("t"), httpx.ReadTimeout("t")], "timeout", 2),
     ([RuntimeError("boom")], "provider", 1),
-    (["   "], "invalid", 1),
-    (["x" * (ex.MAX_RESPONSE_CHARS + 1)], "invalid", 1),
+    (["   "], "malformed", 1),
+    (["x" * (ex.MAX_RESPONSE_CHARS + 1)], "malformed", 1),
 ])
 def test_provider_failures_map_to_short_codes(outcomes, code, calls):
     client = fake_client(*outcomes)
@@ -355,7 +361,7 @@ def test_request_explanation_stores_by_fingerprint_and_language(tabs, price_simp
     assert err == "cooldown"                                              # a new language is a new explanation key
     _, err = ai.request_explanation("price", price_simple, facts, "fp2", "en", CFG, state, 1001.0 + ai.COOLDOWN_S,
                                     client=fake_client("not json"))
-    assert err == "invalid" and ("price", "fp2", "en") not in state["done"]
+    assert err == "malformed" and ("price", "fp2", "en") not in state["done"]
 
 
 def test_guard_inflight_limit_and_expiry():
@@ -470,3 +476,63 @@ def test_kinyarwanda_request_and_rendering(tabs, cash):
     rw_ok = {**COMPARE_OK, "tested": "Wagerageje [[programme]] muri [[place]] ku [[recipient_group]], bahabwa [[payment]] mu gihe cya [[duration_months]]."}
     out = ex.validate_response(json.dumps(rw_ok), "compare", facts, ex.limitation_ids("compare", cash), "rw")
     assert facts["place"].display in out["tested"]
+
+
+
+# ---------------------------------------------------------------------------
+# Sanitised diagnostics
+# ---------------------------------------------------------------------------
+def test_diagnostic_line_has_codes_but_no_secrets(caplog):
+    client = fake_client(api_error(400, status="INVALID_ARGUMENT", reason="API_KEY_INVALID"))
+    with caplog.at_level("WARNING", logger="src.dashboard.ai_service"):
+        with pytest.raises(ai.ProviderError):
+            ai.generate({"language": "en", "facts": {"secret_fact": "PAYLOAD-TEXT"}}, CFG, ex.PRICE_LIMITATIONS,
+                        client=client, sleep=NO_SLEEP)
+    line = next(r.getMessage() for r in caplog.records if "BAHO_NEZA_AI_DIAG" in r.getMessage())
+    for part in ("stage=request", "category=access", "exception=ClientError", "http_status=400",
+                 "api_status=INVALID_ARGUMENT", "reason=API_KEY_INVALID", "model=gemini-test-model", "config_ready=True"):
+        assert part in line, part
+    assert "sdk=" in line
+    for leaked in ("test-key-not-real", "SECRET-PROVIDER-MESSAGE", "PAYLOAD-TEXT", "Never write a digit"):
+        assert leaked not in caplog.text, leaked
+
+
+@needs_tables
+def test_validation_failures_log_rule_names_only(tabs, price_simple, caplog):
+    facts = _facts("price", price_simple, tabs)
+    bad = json.dumps({**PRICE_OK, "meaning": "It costs 999 RWF RESPONSE-TEXT more."})
+    with caplog.at_level("WARNING", logger="src.dashboard.ai_service"):
+        out, err = ai.request_explanation("price", price_simple, facts, "fp", "en", CFG, {}, 0.0, client=fake_client(bad))
+    assert out is None and err == "invalid"
+    assert "stage=validate" in caplog.text and "rule=number_not_taken_from_verified_facts" in caplog.text
+    assert "RESPONSE-TEXT" not in caplog.text and "999" not in caplog.text
+
+
+def test_setup_failure_is_reported_as_setup(monkeypatch, caplog):
+    def broken(cfg):
+        raise ImportError("google-genai missing")
+    monkeypatch.setattr(ai, "make_client", broken)
+    with caplog.at_level("WARNING", logger="src.dashboard.ai_service"):
+        with pytest.raises(ai.ProviderError) as e:
+            ai.generate({"language": "en"}, CFG, ex.PRICE_LIMITATIONS, sleep=NO_SLEEP)
+    assert e.value.code == "setup" and "stage=setup" in caplog.text and "exception=ImportError" in caplog.text
+
+
+@pytest.mark.parametrize("raw,expected", [
+    (READY, {"section_present": True, "enabled_true": True, "key_present": True, "approved_true": True, "model_valid": True}),
+    ({**READY, "enabled": "true", "api_key": "REPLACE_WITH_YOUR_GEMINI_API_KEY"}, {"enabled_true": False, "key_present": False}),
+    (None, {"section_present": False, "key_present": False}),
+])
+def test_config_report_is_booleans_only(raw, expected):
+    rep = ai.config_report(raw)
+    assert all(isinstance(v, bool) for v in rep.values())
+    for k, v in expected.items():
+        assert rep[k] is v, k
+    assert "test-key-not-real" not in json.dumps(rep)
+
+
+def test_every_error_code_has_a_message_in_both_languages():
+    for code in ("access", "incompatible", "setup", "malformed", "invalid", "quota", "timeout", "provider",
+                 "cooldown", "limit", "inflight"):
+        for lang in ("en", "rw"):
+            assert translate(f"explain.error.{code}", lang)

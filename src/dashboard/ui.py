@@ -367,6 +367,8 @@ def explanation_panel(kind: str, result: dict, fp: str, meta: dict, price_label:
                                 disabled=status != "ready" or done is not None, width="stretch")
         if status != "ready":
             st.caption(t("explain.not_configured"))
+            if autorun:
+                ai.log_config_status()          # server log only: which setting is missing (booleans, no values)
         elif done is None and (clicked or autorun):
             with st.spinner(t("explain.loading")):
                 done, err = ai.request_explanation(kind, result, facts, fp, lang, cfg, state, time.time())

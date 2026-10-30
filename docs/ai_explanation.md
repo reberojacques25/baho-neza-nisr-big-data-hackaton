@@ -160,6 +160,22 @@ These checks reduce the risk of wrong or misleading wording but **do not guarant
 
 **Without AI.** The core app and the deterministic summaries work fully when Gemini, or the `google-genai` package, is unavailable.
 
+### Diagnostics (server log only)
+
+Every failed attempt writes one sanitised line to the app's log. On Streamlit Community Cloud the log is under **Manage app**; search it for `BAHO_NEZA_AI`.
+
+- **`BAHO_NEZA_AI_DIAG`** fields:
+  - `stage`: setup, request, response, parse, validate or payload;
+  - `category`: access, incompatible, quota, timeout, provider, setup, malformed or invalid;
+  - `exception`;
+  - `http_status`;
+  - `api_status` and `reason`: Google's own error codes, for example `INVALID_ARGUMENT` or `API_KEY_INVALID`;
+  - `model`, `sdk` (the google-genai version) and `config_ready`;
+  - for responses, `finish_reason`;
+  - for validation, the rule name.
+- **`BAHO_NEZA_AI_CONFIG`** appears when results are requested while AI is off. It records `status=` plus booleans only: `section_present`, `enabled_true`, `provider_ok`, `key_present`, `model_set`, `model_valid` and `approved_true`.
+- **Never logged:** the key, request headers, payload, prompt, response text or the provider's error message.
+
 ## 7. Local setup
 
 `.streamlit/secrets.toml` was created with placeholders, and Git ignores it (`.gitignore`). `.streamlit/secrets.example.toml` is the tracked, placeholder-only template.

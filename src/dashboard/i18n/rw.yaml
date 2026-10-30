@@ -570,6 +570,10 @@ explain:
   needs_results: Banza werekane ibisubizo byemewe kugira ngo ubone ibisobanuro.
   fallback: Incamake yoroshye iri hejuru iracyari ukuri.
   error:
+    access: "Serivisi ya AI ntiyemeye uburenganzira bw'iyi porogaramu (urufunguzo, uburenganzira cyangwa aho iherereye)."
+    incompatible: Moderi ya AI yanze uburyo ubusabe bwanditswemo cyangwa izina rya moderi.
+    setup: Serivisi ya AI ntiyashoboye gutegurwa kuri iyi seriveri.
+    malformed: Serivisi ya AI yatanze igisubizo kidasomeka.
     timeout: Ibisobanuro bya AI byatinze cyane.
     quota: Serivisi ya AI irahuze cyangwa umubare w'ubuntu wageze ku iherezo. Ongera ugerageze nyuma.
     provider: Serivisi ya AI ntiboneka ubu.

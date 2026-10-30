@@ -23,6 +23,10 @@ from dataclasses import dataclass, field
 from src.dashboard import explain as ex
 
 log = logging.getLogger(__name__)
+if not log.handlers:                 # make sanitised diagnostics visible in Streamlit Community Cloud's log (stderr)
+    _handler = logging.StreamHandler()
+    _handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+    log.addHandler(_handler)
 
 PLACEHOLDER_PREFIX = "REPLACE_WITH"
 DEFAULT_MODEL = "gemini-3.8-flash"     # stable, free tier, structured output (verified 2026-10-30)
@@ -112,21 +116,92 @@ def _request_config(cfg: AIConfig, lang: str, limitations: tuple[str, ...]):
     return types.GenerateContentConfig(**kwargs)
 
 
+# Error categories shown to users (explain.error.<code>) and written to the diagnostic log
+ACCESS_REASONS = {"API_KEY_INVALID", "API_KEY_SERVICE_BLOCKED", "API_KEY_HTTP_REFERRER_BLOCKED", "API_KEY_IP_ADDRESS_BLOCKED",
+                  "SERVICE_DISABLED", "CONSUMER_INVALID", "ACCESS_TOKEN_SCOPE_INSUFFICIENT", "USER_PROJECT_DENIED"}
+ACCESS_STATUS = {"PERMISSION_DENIED", "UNAUTHENTICATED", "FAILED_PRECONDITION"}   # FAILED_PRECONDITION: e.g. location
+
+
+def sdk_version() -> str:
+    try:
+        from importlib.metadata import version
+        return version("google-genai")
+    except Exception:            # noqa: BLE001
+        return "not-installed"
+
+
+def _error_details(exc: Exception) -> dict:
+    """Safe, structured fields of a provider error: HTTP status, Google status and reason codes. Never the message."""
+    out = {"exception": type(exc).__name__, "http_status": None, "api_status": None, "reason": None}
+    code = getattr(exc, "code", None)
+    out["http_status"] = code if isinstance(code, int) else None
+    status = getattr(exc, "status", None)
+    out["api_status"] = status if isinstance(status, str) and re.fullmatch(r"[A-Z_]{3,40}", status) else None
+    details = getattr(exc, "details", None)
+    items = (details or {}).get("error", {}).get("details", []) if isinstance(details, dict) else []
+    reasons = [d.get("reason") for d in items if isinstance(d, dict) and isinstance(d.get("reason"), str)]
+    reasons = [r for r in reasons if re.fullmatch(r"[A-Z_]{3,60}", r)]
+    out["reason"] = reasons[0] if reasons else None
+    return out
+
+
 def _classify(exc: Exception) -> tuple[str, bool]:
     """(code, transient) for a provider exception."""
     try:
         from google.genai import errors
     except ImportError:              # SDK not installed
-        return "provider", False
+        return "setup", False
     import httpx
     if isinstance(exc, (httpx.TimeoutException, TimeoutError)):
         return "timeout", True
     if isinstance(exc, errors.APIError):
+        d = _error_details(exc)
         if exc.code == 429:
             return "quota", False
+        if exc.code in (401, 403) or d["reason"] in ACCESS_REASONS or d["api_status"] in ACCESS_STATUS:
+            return "access", False
+        if exc.code in (400, 404):
+            return "incompatible", False      # request format, schema, thinking setting or model name rejected
         if exc.code in TRANSIENT_STATUS:
             return "provider", True
     return "provider", False
+
+
+def diagnostic(stage: str, category: str, cfg: AIConfig | None = None, exc: Exception | None = None, **extra) -> str:
+    """One sanitised log line: stage, category, error codes, model and SDK version, configuration booleans.
+    Never the API key, headers, payload, prompt, response text or provider error message."""
+    fields = {"stage": stage, "category": category}
+    if exc is not None:
+        fields.update(_error_details(exc))
+    fields.update({"model": cfg.model if cfg else None, "sdk": sdk_version(), "config_ready": cfg is not None, **extra})
+    line = "BAHO_NEZA_AI_DIAG " + " ".join(f"{k}={v}" for k, v in fields.items())
+    log.warning(line)
+    return line
+
+
+def config_report(raw: Mapping | None) -> dict:
+    """Configuration booleans for diagnostics (no values)."""
+    raw = raw if isinstance(raw, Mapping) else {}
+    model = raw.get("model").strip() if _real(raw.get("model")) else DEFAULT_MODEL
+    return {"section_present": bool(raw), "enabled_true": raw.get("enabled") is True,
+            "provider_ok": raw.get("provider", "gemini") == "gemini", "key_present": _real(raw.get("api_key")),
+            "model_set": _real(raw.get("model")), "model_valid": MODEL_ID.match(model) is not None,
+            "approved_true": raw.get("external_data_approved") is True}
+
+
+def log_config_status() -> str:
+    """Log why AI is not ready (booleans only); used when a user asks for results while AI is off."""
+    try:
+        import streamlit as st
+        raw = st.secrets.get("ai")
+        raw = dict(raw) if raw is not None else None
+    except Exception:            # noqa: BLE001
+        raw = None
+    status, _ = config_status(raw)
+    rep = config_report(raw)
+    line = "BAHO_NEZA_AI_CONFIG status=" + status + " " + " ".join(f"{k}={v}" for k, v in rep.items())
+    log.warning(line)
+    return line
 
 
 def generate(payload: dict, cfg: AIConfig, limitations: tuple[str, ...], *, client=None,
@@ -134,28 +209,35 @@ def generate(payload: dict, cfg: AIConfig, limitations: tuple[str, ...], *, clie
     """Raw JSON text from the model. At most one retry, for timeouts and 5xx errors only."""
     text = json.dumps(payload, ensure_ascii=False)
     if len(text) > ex.MAX_PAYLOAD_CHARS:
-        raise ProviderError("provider")
+        diagnostic("payload", "invalid", cfg)
+        raise ProviderError("invalid")
     try:
         client = client or make_client(cfg)
         config = _request_config(cfg, payload["language"], limitations)
-    except Exception:
-        raise ProviderError("provider") from None
+    except Exception as exc:     # noqa: BLE001 - SDK missing or the request configuration cannot be built
+        diagnostic("setup", "setup", cfg, exc)
+        raise ProviderError("setup") from None
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             response = client.models.generate_content(model=cfg.model, contents=text, config=config)
-            out = getattr(response, "text", None)
-            if not isinstance(out, str) or not out.strip() or len(out) > ex.MAX_RESPONSE_CHARS:
-                raise ProviderError("invalid")
-            return out
-        except ProviderError:
-            raise
         except Exception as exc:     # noqa: BLE001 - mapped to a short code, never logged in full
             code, transient = _classify(exc)
-            log.warning("AI explanation request failed: %s (attempt %d)", code, attempt)
+            diagnostic("request", code, cfg, exc, attempt=attempt, transient=transient)
             if transient and attempt < MAX_ATTEMPTS:
                 sleep(RETRY_DELAY_S)
                 continue
             raise ProviderError(code) from None
+        out = getattr(response, "text", None)
+        if not isinstance(out, str) or not out.strip() or len(out) > ex.MAX_RESPONSE_CHARS:
+            finish = None
+            try:
+                finish = str(response.candidates[0].finish_reason.name)
+            except Exception:        # noqa: BLE001
+                pass
+            diagnostic("response", "malformed", cfg, attempt=attempt, finish_reason=finish,
+                       text_chars=len(out) if isinstance(out, str) else 0)
+            raise ProviderError("malformed")
+        return out
     raise ProviderError("provider")
 
 
@@ -195,8 +277,14 @@ def request_explanation(kind: str, result: dict, facts: dict, fingerprint: str, 
         sections = ex.validate_response(raw, kind, facts, limitations, lang)
     except ProviderError as e:
         return None, e.code
-    except (ex.InvalidExplanation, ValueError):
-        log.warning("AI explanation rejected by validation")
+    except ex.MalformedResponse as e:
+        diagnostic("parse", "malformed", cfg, rule=str(e).replace(" ", "_"))
+        return None, "malformed"
+    except ex.InvalidExplanation as e:
+        diagnostic("validate", "invalid", cfg, rule=str(e).replace(" ", "_"))     # our own rule names only
+        return None, "invalid"
+    except ValueError:
+        diagnostic("payload", "invalid", cfg)
         return None, "invalid"
     finally:
         state["inflight"] = None

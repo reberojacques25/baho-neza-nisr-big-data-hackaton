@@ -58,6 +58,10 @@ class InvalidExplanation(ValueError):
     """The AI response failed validation; the deterministic explanation is used instead."""
 
 
+class MalformedResponse(InvalidExplanation):
+    """The AI response could not be read at all (empty, oversized, not JSON or wrong structure)."""
+
+
 # ---------------------------------------------------------------------------
 # Facts (from valid aggregate results only)
 # ---------------------------------------------------------------------------
@@ -275,14 +279,14 @@ def _words(text: str) -> int:
 def validate_response(raw: str, kind: str, facts: dict[str, Fact], limitations: tuple[str, ...], lang: str) -> dict[str, str]:
     """Parse, check and render an AI response. Returns {section: text, "limitation_id": id} or raises InvalidExplanation."""
     if not isinstance(raw, str) or not raw.strip() or len(raw) > MAX_RESPONSE_CHARS:
-        raise InvalidExplanation("empty or too long")
+        raise MalformedResponse("empty or too long")
     try:
         data = json.loads(raw)
     except json.JSONDecodeError as e:
-        raise InvalidExplanation("not JSON") from e
+        raise MalformedResponse("not JSON") from e
     expected = {"tested", "meaning", "example", "support", "limitation_id", "limitation"}
     if not isinstance(data, dict) or set(data) != expected:
-        raise InvalidExplanation("unexpected structure")
+        raise MalformedResponse("unexpected structure")
     if data["limitation_id"] not in limitations:
         raise InvalidExplanation("unknown limitation")
     needs_support = kind == "compare"

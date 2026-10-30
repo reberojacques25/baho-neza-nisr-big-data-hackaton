@@ -569,6 +569,10 @@ explain:
   needs_results: Show valid results first to get an explanation.
   fallback: The plain-words summary above remains correct.
   error:
+    access: "The AI service did not accept this app's access (key, permissions or location)."
+    incompatible: The AI model rejected the request format or the model name.
+    setup: The AI service could not be set up on this server.
+    malformed: The AI service returned an unreadable answer.
     timeout: The AI explanation took too long.
     quota: The AI service is busy or its free limit has been reached. Try again later.
     provider: The AI service is not available right now.
